@@ -3,31 +3,101 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --ds-gray-1000: hsla(0, 0%, 9%, 1);
+  --ds-gray-100: hsla(0, 0%, 95%, 1);
+  --geist-background: #fff;
+  --geist-selection: #0070f3;
+  --accents-1: #fafafa;
+  --accents-2: #eaeaea;
+  --accents-3: #999;
+  --accents-4: #888;
+  --accents-5: #666;
+  --accents-6: #444;
+  --accents-7: #333;
+  --accents-8: #111;
+  --wv-green: #0cce6b;
+  --wv-orange: #ffa400;
+  --wv-red: #ff4e42;
+  --themed-fg: #fff;
+  --themed-bg: var(--ds-gray-1000);
+  --themed-hover-bg: #383838;
+  color: var(--ds-gray-1000);
+  background: linear-gradient(
+    180deg,
+    var(--geist-background) 30%,
+    var(--accents-1) 50%,
+    var(--accents-1) 100%
+  );
+  min-height: 100%;
+  max-width: 100vw;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+    --ds-gray-1000: hsla(0, 0%, 93%, 1);
+    --ds-gray-100: hsla(0, 0%, 10%, 1);
+    --geist-background: #000;
+    --geist-selection: #0070f3;
+    --accents-1: #111;
+    --accents-2: #333;
+    --accents-3: #444;
+    --accents-4: #666;
+    --accents-5: #888;
+    --accents-6: #999;
+    --accents-7: #eaeaea;
+    --accents-8: #fafafa;
+    --wv-green: #0cce6b;
+    --wv-orange: #ffa400;
+    --wv-red: #ff4e42;
+    --themed-fg: #0a0a0a;
+    --themed-bg: var(--ds-gray-1000);
+    --themed-hover-bg: #ccc;
+    color: var(--ds-gray-1000);
+    background: linear-gradient(
+      180deg,
+      var(--geist-background) 30%,
+      var(--accents-1) 50%,
+      var(--accents-1) 100%
+    );
+    min-height: 100%;
+    max-width: 100vw;
   }
-}
-
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+.card {
+  @apply flex flex-col gap-4 p-6 rounded-xl border border-[--accents-2] hover:border-[--accents-3] hover:bg-[--hover-color];
+}
+
+.card-child {
+  @apply flex flex-col gap-4 p-4 rounded-xl border border-[--accents-2];
+}
+
+.input-container {
+  @apply relative flex flex-col gap-2;
+}
+
+.input {
+  @apply px-3 border-b border-[--accents-2] focus:border-[--geist-selection] outline-none bg-transparent;
+}
+
+.title {
+  @apply text-xl font-semibold leading-8;
+}
+
+.subtitle {
+  @apply text-sm text-[--accents-5];
+}
+
+.picker {
+  @apply flex w-full h-12 border border-[--accents-2] appearance-none bg-transparent cursor-pointer focus:border-[--geist-selection];
+}
+
+.button {
+  @apply px-3.5 h-12 text-[--themed-fg] rounded-lg bg-[--themed-bg] hover:bg-[--themed-hover-bg];
 }
