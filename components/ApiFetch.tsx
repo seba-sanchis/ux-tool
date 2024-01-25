@@ -4,7 +4,7 @@ import { useState } from "react";
 
 export default function ApiFetch() {
   const [api, setApi] = useState("");
-  const [data, setData] = useState(null);
+  const [data, setData] = useState<String[]>([]);
   const [error, setError] = useState("");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -23,7 +23,7 @@ export default function ApiFetch() {
       }
     } catch (error) {
       setError("Error fetching data from the API.");
-      setData(null);
+      setData([]);
     }
   };
 

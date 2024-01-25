@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import tinycolor from "tinycolor2";
-import { CopyButton } from ".";
+
+import { InputColor, InputText } from ".";
 
 export default function ColorPicker() {
   const [hex, setHex] = useState<string>("");
@@ -46,74 +47,15 @@ export default function ColorPicker() {
     <form className="card">
       <h2 className="title">Color converter</h2>
 
-      <div className="input-container">
-        <label htmlFor="picker" className="subtitle sr-only">
-          Picker
-        </label>
-        <input
-          id="picker"
-          type="color"
-          value={hex}
-          onChange={(e) => handleHex(e.target.value)}
-          className="picker"
-        />
-      </div>
+      <InputColor id="picker" color={hex} handleColor={handleHex} />
 
-      <div className="input-container">
-        <label htmlFor="hex" className="subtitle">
-          HEX
-        </label>
-        <input
-          id="hex"
-          type="text"
-          value={hex}
-          onChange={(e) => handleHex(e.target.value)}
-          className="input"
-        />
-        <CopyButton text={hex} />
-      </div>
+      <InputText id="hex" color={hex} handleColor={handleHex} />
 
-      <div className="input-container">
-        <label htmlFor="rgb" className="subtitle">
-          RGB
-        </label>
-        <input
-          id="rgb"
-          type="text"
-          value={rgb}
-          onChange={(e) => handleRgb(e.target.value)}
-          className="input"
-        />
-        <CopyButton text={rgb} />
-      </div>
+      <InputText id="rgb" color={rgb} handleColor={handleRgb} />
 
-      <div className="input-container">
-        <label htmlFor="hsv" className="subtitle">
-          HSV
-        </label>
-        <input
-          id="hsv"
-          type="text"
-          value={hsv}
-          onChange={(e) => handleHsv(e.target.value)}
-          className="input"
-        />
-        <CopyButton text={hsv} />
-      </div>
+      <InputText id="hsv" color={hsv} handleColor={handleHsv} />
 
-      <div className="input-container">
-        <label htmlFor="hsl" className="subtitle">
-          HSL
-        </label>
-        <input
-          id="hsl"
-          type="text"
-          value={hsl}
-          onChange={(e) => handleHsl(e.target.value)}
-          className="input"
-        />
-        <CopyButton text={hsl} />
-      </div>
+      <InputText id="hsl" color={hsl} handleColor={handleHsl} />
     </form>
   );
 }

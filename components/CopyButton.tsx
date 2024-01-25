@@ -7,7 +7,11 @@ export default function CopyButton({ text }: { text: string }) {
     navigator.clipboard.writeText(text);
   };
   return (
-    <button type="button" onClick={handleCopy} className="absolute right-4 bottom-4 text-[--accents-5]">
+    <button
+      type="button"
+      onClick={handleCopy}
+      className="absolute right-4 bottom-4 text-[--accents-5]"
+    >
       <FaCopy size={16} />
     </button>
   );

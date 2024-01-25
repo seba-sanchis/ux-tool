@@ -3,6 +3,8 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import tinycolor from "tinycolor2";
 
+import { InputColor, InputRange, InputText } from ".";
+
 export default function Foreground({
   setForeground,
 }: {
@@ -53,63 +55,19 @@ export default function Foreground({
   return (
     <div className="card-child">
       <h3>Foreground</h3>
-      <div className="input-container">
-        <label htmlFor="picker" className="subtitle sr-only">
-          Picker
-        </label>
-        <input
-          id="picker"
-          type="color"
-          value={hex}
-          onChange={(e) => handleHex(e.target.value)}
-          className="picker"
-        />
-      </div>
 
-      <div className="input-container">
-        <label htmlFor="hex" className="subtitle">
-          HEX
-        </label>
-        <input
-          id="hex"
-          type="text"
-          value={hex}
-          onChange={(e) => handleHex(e.target.value)}
-          className="input"
-        />
-      </div>
+      <InputColor id="picker" color={hex} handleColor={handleHex} />
 
-      <div className="input-container">
-        <label htmlFor="rgb" className="subtitle">
-          RGB
-        </label>
-        <input
-          id="rgb"
-          type="text"
-          value={rgb}
-          onChange={(e) => handleRgb(e.target.value)}
-          className="input"
-        />
-      </div>
+      <InputText id="hex" color={hex} handleColor={handleHex} />
 
-      <div className="input-container">
-        <label htmlFor="lightness" className="subtitle">
-          Lightness
-        </label>
-        <span>
-          <input
-            type="range"
-            id="lightness"
-            min="0"
-            max="100"
-            value={lightness}
-            onChange={(e) => handleLightness(Number(e.target.value))}
-          />
-          {/* <span
-          className={`block w-20 h-20 [background-image:linear-gradient(90deg,rgb(0,0,0),rgb(128,128,128),rgb(255,255,255))]`}
-        ></span> */}
-        </span>
-      </div>
+      <InputText id="rgb" color={rgb} handleColor={handleRgb} />
+
+      <InputRange
+        id="lightness"
+        lightness={lightness}
+        handleLightness={handleLightness}
+        rgb={rgb}
+      />
     </div>
   );
 }
