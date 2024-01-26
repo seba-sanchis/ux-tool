@@ -1,4 +1,4 @@
-import { ApiFetch, ColorContrast, ColorPicker } from "@/components";
+import { ApiFetch, ColorContrast, ColorPalette, ColorPicker } from "@/components";
 
 export default function Home() {
   return (
@@ -7,6 +7,9 @@ export default function Home() {
         <ColorPicker />
 
         <ColorContrast />
+
+        <ColorPalette />
+
         <ApiFetch />
       </div>
     </main>

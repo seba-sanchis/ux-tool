@@ -14,7 +14,7 @@ export default function InputRange({
       <label htmlFor="lightness" className="subtitle">
         {id}
       </label>
-      <span>
+      <span className="relative">
         <input
           type="range"
           id={id}
@@ -24,12 +24,12 @@ export default function InputRange({
           onChange={(e) => handleLightness(Number(e.target.value))}
           className="relative w-full bg-transparent appearance-none z-30"
         />
-        <span
-          className={`inline-block relative bottom-[31px] w-full h-1`}
+        <div
+          className={`inline-block absolute top-2 left-0 w-full h-1`}
           style={{
             backgroundImage: `linear-gradient(90deg,rgb(0,0,0),${rgb},rgb(255,255,255))`,
           }}
-        ></span>
+        ></div>
       </span>
     </div>
   );

@@ -10,7 +10,7 @@ export default function CopyButton({ text }: { text: string }) {
     <button
       type="button"
       onClick={handleCopy}
-      className="absolute right-4 bottom-4 text-[--accents-5]"
+      className="absolute right-4 bottom-4 text-[--accents-5] active:text-[--ds-gray-1000]"
     >
       <FaCopy size={16} />
     </button>
