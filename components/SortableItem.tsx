@@ -29,8 +29,12 @@ export default function SortableItem({ id, disabled, children }: Props) {
       style={style}
       {...attributes}
       {...listeners}
-      className={`relative block active:z-30 active:border-[--accents-3] active:bg-[--hover-color] cursor-grab active:cursor-grabbing ${
-        disabled || isDragging ? "" : "jiggle"
+      className={`relative block ${
+        disabled
+          ? "cursor-default"
+          : isDragging
+          ? "cursor-grabbing z-30 border-[--accents-3] bg-[--hover-color]"
+          : "jiggle cursor-grab hover:border-[--accents-3] hover:bg-[--hover-color]"
       } ${id === "2" || id === "3" ? "col-span-2" : ""}`}
     >
       {children}
