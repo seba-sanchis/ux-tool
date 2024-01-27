@@ -4,9 +4,10 @@ import { DndContext, DragEndEvent } from "@dnd-kit/core";
 
 import {
   ApiFetch,
+  ChromaticPalette,
   ColorContrast,
-  ColorPalette,
   ColorPicker,
+  MonochromaticPalette,
   Navbar,
   SortableItem,
 } from "@/components";
@@ -19,7 +20,7 @@ import { useState } from "react";
 import { FaTimes } from "react-icons/fa";
 
 export default function Home() {
-  const [items, setItems] = useState(["1", "2", "3", "4"]);
+  const [items, setItems] = useState(["1", "2", "3", "4", "5", "6"]);
   const [isDragDisabled, setDragDisabled] = useState(true);
 
   function draggableComponents(item: string) {
@@ -29,8 +30,12 @@ export default function Home() {
       case "2":
         return <ColorContrast />;
       case "3":
-        return <ColorPalette />;
+        return <MonochromaticPalette />;
       case "4":
+        return;
+      case "5":
+        return <ChromaticPalette />;
+      case "6":
         return <ApiFetch />;
       default:
         return null;

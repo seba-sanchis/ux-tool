@@ -2,13 +2,13 @@
 
 import { palette } from "@/constants";
 
-export default function ColorPalette() {
+export default function ChromaticPalette() {
   const handleCopy = (tone: string) => {
     navigator.clipboard.writeText(tone);
   };
   return (
     <div className="card">
-      <h2 className="title">Color Palette</h2>
+      <h2 className="title">Chromatic palette</h2>
 
       <div className="grid grid-cols-11 place-items-center gap-1">
         {palette.map((color) => (

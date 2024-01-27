@@ -35,7 +35,7 @@ export default function SortableItem({ id, disabled, children }: Props) {
           : isDragging
           ? "cursor-grabbing z-30 border-[--accents-3] bg-[--hover-color]"
           : "jiggle cursor-grab hover:border-[--accents-3] hover:bg-[--hover-color]"
-      } ${id === "2" || id === "3" ? "col-span-2" : ""}`}
+      } ${id === "2" || id === "3" || id === "5" ? "col-span-2" : ""}`}
     >
       {children}
     </div>
