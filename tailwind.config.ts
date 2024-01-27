@@ -8,10 +8,14 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+      animation: {
+        jiggle: "jiggly 120ms ease-in-out 100ms alternate infinite",
+      },
+      keyframes: {
+        jiggly: {
+          "0%": { transform: "rotate(-0.3deg)" },
+          to: { transform: "rotate(0.3deg)" },
+        },
       },
     },
   },

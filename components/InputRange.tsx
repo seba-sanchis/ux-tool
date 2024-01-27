@@ -1,14 +1,16 @@
+type Props = {
+  id: string;
+  lightness: number;
+  handleLightness: (value: number) => void;
+  rgb: string;
+};
+
 export default function InputRange({
   id,
   lightness,
   handleLightness,
   rgb,
-}: {
-  id: string;
-  lightness: number;
-  handleLightness: (value: number) => void;
-  rgb: string;
-}) {
+}: Props) {
   return (
     <div className="input-container">
       <label htmlFor="lightness" className="subtitle">

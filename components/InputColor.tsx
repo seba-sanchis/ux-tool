@@ -1,12 +1,10 @@
-export default function InputColor({
-  id,
-  color,
-  handleColor,
-}: {
+type Props = {
   id: string;
   color: string;
   handleColor: (value: string) => void;
-}) {
+};
+
+export default function InputColor({ id, color, handleColor }: Props) {
   return (
     <div className="input-container">
       <label htmlFor="picker" className="subtitle sr-only">

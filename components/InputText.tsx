@@ -1,14 +1,12 @@
 import { CopyButton } from ".";
 
-export default function InputText({
-  id,
-  color,
-  handleColor,
-}: {
+type Props = {
   id: string;
   color: string;
   handleColor: (value: string) => void;
-}) {
+};
+
+export default function InputText({ id, color, handleColor }: Props) {
   return (
     <div className="input-container">
       <label htmlFor={id} className="subtitle">
