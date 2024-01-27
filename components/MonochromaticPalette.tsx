@@ -2,9 +2,15 @@ import { useState } from "react";
 import tinycolor from "tinycolor2";
 import { InputText } from ".";
 
-export default function MonochromaticPalette() {
+type Props = {
+  palette: { hex: string; tone: number }[];
+  setPalette: React.Dispatch<
+    React.SetStateAction<{ hex: string; tone: number }[]>
+  >;
+};
+
+export default function MonochromaticPalette({ palette, setPalette }: Props) {
   const [hex, setHex] = useState("");
-  const [palette, setPalette] = useState<{ hex: string; tone: number }[]>();
 
   function handleHex(value: string) {
     setHex(value);
@@ -15,18 +21,20 @@ export default function MonochromaticPalette() {
 
     const hue = hsl.h;
 
+    const saturation = hsl.s;
+
     const paletteHsl = [
-      `hsl(${hue}, 100%, 97%)`,
-      `hsl(${hue}, 100%, 95%)`,
-      `hsl(${hue}, 96%, 90%)`,
-      `hsl(${hue}, 96%, 82%)`,
-      `hsl(${hue}, 95%, 71%)`,
-      `hsl(${hue}, 89%, 60%)`,
-      `hsl(${hue}, 77%, 50%)`,
-      `hsl(${hue}, 83%, 41%)`,
-      `hsl(${hue}, 80%, 35%)`,
-      `hsl(${hue}, 75%, 30%)`,
-      `hsl(${hue}, 100%, 16%)`,
+      `hsl(${hue}, ${saturation}, 97%)`,
+      `hsl(${hue}, ${saturation}, 95%)`,
+      `hsl(${hue}, ${saturation}, 90%)`,
+      `hsl(${hue}, ${saturation}, 82%)`,
+      `hsl(${hue}, ${saturation}, 71%)`,
+      `hsl(${hue}, ${saturation}, 60%)`,
+      `hsl(${hue}, ${saturation}, 50%)`,
+      `hsl(${hue}, ${saturation}, 41%)`,
+      `hsl(${hue}, ${saturation}, 35%)`,
+      `hsl(${hue}, ${saturation}, 30%)`,
+      `hsl(${hue}, ${saturation}, 16%)`,
     ];
 
     const paletteHex = paletteHsl.map((color, index) => {
@@ -43,7 +51,7 @@ export default function MonochromaticPalette() {
 
   return (
     <form className="card">
-      <h2 className="title">Monochromatic palette</h2>
+      <h2 className="title">Monochromatic Palette</h2>
 
       <InputText id="hex" color={hex} handleColor={handleHex} />
 
@@ -51,13 +59,13 @@ export default function MonochromaticPalette() {
         {palette?.map((color) => (
           <div
             key={color.tone}
-            className="flex flex-col justify-end items-center w-full h-20 p-2 text-sm rounded-lg"
+            className="flex flex-col justify-end items-center w-full h-40 p-2 text-sm rounded-lg"
             style={{
               backgroundColor: color.hex,
               color: `${
-                tinycolor.isReadable(color.hex, palette[9].hex)
-                  ? palette[9].hex
-                  : palette[1].hex
+                tinycolor.isReadable(color.hex, palette[9]?.hex)
+                  ? palette[9]?.hex
+                  : palette[1]?.hex
               }`,
             }}
           >

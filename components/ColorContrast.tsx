@@ -48,7 +48,7 @@ export default function ColorContrast() {
 
   return (
     <form className="card">
-      <h2 className="title">Color contrast</h2>
+      <h2 className="title">Color Contrast</h2>
 
       <div className="grid grid-cols-2 gap-6">
         <div

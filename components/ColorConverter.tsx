@@ -6,7 +6,7 @@ import tinycolor from "tinycolor2";
 import { InputColor, InputText } from ".";
 import { palette } from "@/constants";
 
-export default function ColorPicker() {
+export default function ColorConverter() {
   const [hex, setHex] = useState<string>("");
   const [hsl, setHsl] = useState<string>("");
   const [hsv, setHsv] = useState<string>("");
@@ -110,7 +110,7 @@ export default function ColorPicker() {
 
   return (
     <form className="card">
-      <h2 className="title">Color converter</h2>
+      <h2 className="title">Color Converter</h2>
 
       <InputColor id="picker" color={hex} handleColor={handleHex} />
 

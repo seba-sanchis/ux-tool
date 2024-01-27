@@ -6,37 +6,75 @@ import {
   ApiFetch,
   ChromaticPalette,
   ColorContrast,
-  ColorPicker,
+  ColorConverter,
   MonochromaticPalette,
   Navbar,
   SortableItem,
+  UiKit,
 } from "@/components";
 import {
   SortableContext,
   arrayMove,
   rectSwappingStrategy,
 } from "@dnd-kit/sortable";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaTimes } from "react-icons/fa";
 
 export default function Home() {
   const [items, setItems] = useState(["1", "2", "3", "4", "5", "6"]);
   const [isDragDisabled, setDragDisabled] = useState(true);
+  const [palette, setPalette] = useState<{ hex: string; tone: number }[]>([
+    { hex: "#F7F7F7", tone: 50 },
+    { hex: "#F2F2F2", tone: 100 },
+    { hex: "#E6E6E6", tone: 200 },
+    { hex: "#D1D1D1", tone: 300 },
+    { hex: "#B5B5B5", tone: 400 },
+    { hex: "#999999", tone: 500 },
+    { hex: "#808080", tone: 600 },
+    { hex: "#696969", tone: 700 },
+    { hex: "#595959", tone: 800 },
+    { hex: "#4D4D4D", tone: 900 },
+    { hex: "#292929", tone: 950 },
+  ]);
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  useEffect(() => {
+    const checkDarkMode = () => {
+      const isDark =
+        window.matchMedia &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches;
+      setIsDarkMode(isDark);
+    };
+
+    // Run the check initially
+    checkDarkMode();
+
+    // Subscribe to changes in the dark mode preference
+    const mediaQueryList = window.matchMedia("(prefers-color-scheme: dark)");
+    mediaQueryList.addEventListener("change", checkDarkMode);
+
+    // Cleanup the event listener on component unmount
+    return () => {
+      mediaQueryList.removeEventListener("change", checkDarkMode);
+    };
+  }, []);
 
   function draggableComponents(item: string) {
     switch (item) {
       case "1":
-        return <ColorPicker />;
+        return <ColorConverter />;
       case "2":
         return <ColorContrast />;
       case "3":
-        return <MonochromaticPalette />;
+        return (
+          <MonochromaticPalette palette={palette} setPalette={setPalette} />
+        );
       case "4":
-        return;
+        return <UiKit palette={palette} isDarkMode={isDarkMode} />;
       case "5":
-        return <ChromaticPalette />;
-      case "6":
         return <ApiFetch />;
+      case "6":
+        return <ChromaticPalette />;
       default:
         return null;
     }

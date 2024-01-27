@@ -8,7 +8,7 @@ export default function ChromaticPalette() {
   };
   return (
     <div className="card">
-      <h2 className="title">Chromatic palette</h2>
+      <h2 className="title">Chromatic Palette</h2>
 
       <div className="grid grid-cols-11 place-items-center gap-1">
         {palette.map((color) => (

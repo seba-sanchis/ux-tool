@@ -29,7 +29,7 @@ export default function ApiFetch() {
 
   return (
     <form onSubmit={handleSubmit} className="card">
-      <h2 className="title">API status</h2>
+      <h2 className="title">API Status</h2>
 
       <div className="flex items-center gap-4">
         <div className="input-container w-4/5">
