@@ -1,4 +1,3 @@
-export { default as ApiFetch } from "./ApiFetch";
 export { default as Background } from "./Background";
 export { default as ChromaticPalette } from "./ChromaticPalette";
 export { default as ColorContrast } from "./ColorContrast";

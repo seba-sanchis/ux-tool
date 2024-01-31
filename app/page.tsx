@@ -3,7 +3,6 @@
 import { DndContext, DragEndEvent } from "@dnd-kit/core";
 
 import {
-  ApiFetch,
   ChromaticPalette,
   ColorContrast,
   ColorConverter,
@@ -21,7 +20,7 @@ import { useEffect, useState } from "react";
 import { FaTimes } from "react-icons/fa";
 
 export default function Home() {
-  const [items, setItems] = useState(["1", "2", "3", "4", "5", "6"]);
+  const [items, setItems] = useState(["1", "2", "3", "4", "5"]);
   const [isDragDisabled, setDragDisabled] = useState(true);
   const [palette, setPalette] = useState<{ hex: string; tone: number }[]>([
     { hex: "#F7F7F7", tone: 50 },
@@ -72,8 +71,6 @@ export default function Home() {
       case "4":
         return <UiKit palette={palette} isDarkMode={isDarkMode} />;
       case "5":
-        return <ApiFetch />;
-      case "6":
         return <ChromaticPalette />;
       default:
         return null;
@@ -113,7 +110,7 @@ export default function Home() {
                   {draggableComponents(item)}
                   <button
                     className={`absolute top-4 right-4 p-3.5 rounded-full button-outlined ${
-                      isDragDisabled ? "hidden" : "block"
+                      isDragDisabled ? "hidden" : "inline-block"
                     }`}
                     onClick={() => removeItem(item)}
                   >

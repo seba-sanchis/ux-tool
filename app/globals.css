@@ -109,7 +109,7 @@
 }
 
 .button-outlined {
-  @apply px-3.5 text-[--ds-gray-1000] bg-[--ds-background-100] hover:bg-[--ds-gray-200] shadow-[0_0_0_1px_var(--ds-gray-alpha-400)];
+  @apply px-3.5 text-[--ds-gray-1000] bg-[--ds-background-100] shadow-[0_0_0_1px_var(--ds-gray-alpha-400)];
 }
 
 .jiggle {

@@ -49,17 +49,23 @@ export default function MonochromaticPalette({ palette, setPalette }: Props) {
     setPalette(paletteHex);
   }
 
+  const handleCopy = (tone: string) => {
+    navigator.clipboard.writeText(tone);
+  };
+
   return (
     <form className="card">
       <h2 className="title">Monochromatic Palette</h2>
 
       <InputText id="hex" color={hex} handleColor={handleHex} />
 
-      <div className="grid grid-cols-11 gap-2">
+      <div className="grid grid-cols-11 gap-1 place-items-center">
         {palette?.map((color) => (
-          <div
+          <button
             key={color.tone}
-            className="flex flex-col justify-end items-center w-full h-40 p-2 text-sm rounded-lg"
+            className="flex flex-col justify-end items-center w-full h-40 p-2 text-sm rounded-lg active:h-[156px]"
+            onClick={() => handleCopy(color.hex)}
+            type="button"
             style={{
               backgroundColor: color.hex,
               color: `${
@@ -71,7 +77,7 @@ export default function MonochromaticPalette({ palette, setPalette }: Props) {
           >
             <span className="font-semibold">{color.tone}</span>
             <span>{color.hex.slice(1)}</span>
-          </div>
+          </button>
         ))}
       </div>
     </form>
