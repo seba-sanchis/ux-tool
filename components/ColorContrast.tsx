@@ -1,7 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Background, Foreground } from ".";
+import tinycolor from "tinycolor2";
+import Foreground from "./Foreground";
+import Background from "./Background";
 
 export default function ColorContrast() {
   const [foreground, setForeground] = useState("");
@@ -9,50 +11,24 @@ export default function ColorContrast() {
   const [contrastRatio, setContrastRatio] = useState<number | null>(null);
 
   useEffect(() => {
-    handleAnalysis();
+    handleReadability();
   }, [foreground, background]);
 
-  const handleAnalysis = () => {
-    const luminance1 = getRelativeLuminance(foreground);
-    const luminance2 = getRelativeLuminance(background);
+  const handleReadability = () => {
+    const readability = tinycolor.readability(foreground, background);
 
-    const lightest = Math.max(luminance1, luminance2);
-    const darkest = Math.min(luminance1, luminance2);
+    const roundedReadability = parseFloat(readability.toFixed(2));
 
-    const calculatedContrastRatio = (lightest + 0.05) / (darkest + 0.05);
-    setContrastRatio(parseFloat(calculatedContrastRatio.toFixed(2)));
-  };
-
-  const getRelativeLuminance = (color: string) => {
-    const rgba = hexToRgba(color);
-    const srgb = rgba
-      .map((val) => val / 255)
-      .map((value) => {
-        if (value <= 0.04045) {
-          return value / 12.92;
-        } else {
-          return Math.pow((value + 0.055) / 1.055, 2.4);
-        }
-      });
-
-    return 0.2126 * srgb[0] + 0.7152 * srgb[1] + 0.0722 * srgb[2];
-  };
-
-  const hexToRgba = (hex: string) => {
-    const bigint = parseInt(hex.slice(1), 16);
-    const r = (bigint >> 16) & 255;
-    const g = (bigint >> 8) & 255;
-    const b = bigint & 255;
-    return [r, g, b, 255];
+    setContrastRatio(roundedReadability);
   };
 
   return (
-    <form className="card">
+    <form className="card col-span-2">
       <h2 className="title">Color Contrast</h2>
 
-      <div className="grid grid-cols-2 gap-6">
+      <div className="grid grid-cols-4 gap-6">
         <div
-          className="card-child"
+          className="card-child col-span-2"
           style={{ color: foreground, backgroundColor: background }}
         >
           <span className="text-3xl">Large sample text.</span>
@@ -61,13 +37,50 @@ export default function ColorContrast() {
 
         <div className="card-child justify-center">
           {contrastRatio && (
-            <span
-              className={`flex justify-center items-center text-xl ${
-                contrastRatio >= 4.5 ? "text-[--wv-green]" : "text-[--wv-red]"
-              }`}
-            >
-              {contrastRatio}
-            </span>
+            <div className="flex flex-1">
+              <div className="flex flex-col w-full">
+                <h3>Contrast Ratio</h3>
+                <div className="flex justify-center items-center flex-1">
+                  <span
+                    className={`text-xl ${
+                      contrastRatio >= 4.5
+                        ? "text-[--wv-green]"
+                        : contrastRatio >= 3
+                        ? "text-[--wv-orange]"
+                        : "text-[--wv-red]"
+                    }`}
+                  >
+                    {contrastRatio}
+                  </span>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+
+        <div className="card-child justify-center">
+          {contrastRatio && (
+            <div className="flex flex-col flex-1">
+              <h3>Level</h3>
+              <ul className="flex flex-col justify-center items-center flex-1">
+                <li
+                  className={`${
+                    contrastRatio >= 4.5
+                      ? "text-[--wv-green]"
+                      : "text-[--wv-red]"
+                  }`}
+                >
+                  AAA
+                </li>
+                <li
+                  className={`${
+                    contrastRatio >= 3 ? "text-[--wv-green]" : "text-[--wv-red]"
+                  }`}
+                >
+                  AA
+                </li>
+              </ul>
+            </div>
           )}
         </div>
 

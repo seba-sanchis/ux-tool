@@ -8,7 +8,7 @@ export default function ChromaticPalette() {
     navigator.clipboard.writeText(tone);
   };
   return (
-    <div className="card">
+    <div className="card col-span-3">
       <h2 className="title">Chromatic Palette</h2>
 
       <div className="grid grid-cols-11 place-items-center gap-2">

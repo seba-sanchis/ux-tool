@@ -2,8 +2,7 @@
 
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import tinycolor from "tinycolor2";
-
-import { InputColor, InputRange, InputText } from ".";
+import Input from "./Input";
 
 export default function Foreground({
   setForeground,
@@ -28,15 +27,15 @@ export default function Foreground({
     setLightness(hsl.l * 100);
   };
 
-  const handleRgb = (value: string) => {
-    const color = tinycolor(value);
+  // const handleRgb = (value: string) => {
+  //   const color = tinycolor(value);
 
-    const hsl = color.toHsl();
+  //   const hsl = color.toHsl();
 
-    setHex(color.toHexString());
-    setRgb(value);
-    setLightness(hsl.l * 100);
-  };
+  //   setHex(color.toHexString());
+  //   setRgb(value);
+  //   setLightness(hsl.l * 100);
+  // };
 
   const handleLightness = (lightness: number) => {
     const color = tinycolor(hex);
@@ -53,20 +52,35 @@ export default function Foreground({
   };
 
   return (
-    <div className="card-child">
+    <div className="card-child col-span-2">
       <h3>Foreground</h3>
 
-      <InputColor id="picker" color={hex} handleColor={handleHex} />
+      <Input
+        id="picker"
+        color={hex}
+        handleColor={handleHex}
+        containerStyle="picker-container"
+        inputStyle="picker"
+        type="color"
+      />
 
-      <InputText id="hex" color={hex} handleColor={handleHex} />
+      <Input
+        id="color"
+        color={hex}
+        handleColor={handleHex}
+        containerStyle=""
+        inputStyle="input"
+        type="text"
+      />
 
-      <InputText id="rgb" color={rgb} handleColor={handleRgb} />
-
-      <InputRange
+      <Input
         id="lightness"
         lightness={lightness}
         handleLightness={handleLightness}
         rgb={rgb}
+        containerStyle="input-container"
+        inputStyle="relative w-full bg-transparent appearance-none z-30"
+        type="range"
       />
     </div>
   );

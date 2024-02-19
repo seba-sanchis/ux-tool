@@ -7,17 +7,7 @@ const config: Config = {
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    extend: {
-      animation: {
-        jiggle: "jiggly 120ms ease-in-out 100ms alternate infinite",
-      },
-      keyframes: {
-        jiggly: {
-          "0%": { transform: "rotate(-0.3deg)" },
-          to: { transform: "rotate(0.3deg)" },
-        },
-      },
-    },
+    extend: {},
   },
   plugins: [],
 };

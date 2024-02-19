@@ -1,52 +1,75 @@
-import { useState } from "react";
+"use client";
+
+import { useEffect } from "react";
 import tinycolor from "tinycolor2";
-import { InputText } from ".";
+
+import { palette as p } from "@/constants";
 
 type Props = {
+  color: string;
   palette: { hex: string; tone: number }[];
   setPalette: React.Dispatch<
     React.SetStateAction<{ hex: string; tone: number }[]>
   >;
 };
 
-export default function MonochromaticPalette({ palette, setPalette }: Props) {
-  const [hex, setHex] = useState("");
+export default function MonochromaticPalette({
+  color,
+  palette,
+  setPalette,
+}: Props) {
+  useEffect(() => {
+    handlePalette();
+  }, [color]);
 
-  function handleHex(value: string) {
-    setHex(value);
+  function handlePalette() {
+    let convertedColor = tinycolor(color);
 
-    const base = tinycolor(value);
+    const format = convertedColor.getFormat();
 
-    const hsl = base.toHsl();
+    if (!format) {
+      const tailwindToHex = p.find((c) => c.tone === color)?.hex;
+
+      convertedColor = tinycolor(tailwindToHex);
+    }
+
+    const hsl = convertedColor.toHsl();
 
     const hue = hsl.h;
 
     const saturation = hsl.s;
 
-    const paletteHsl = [
-      `hsl(${hue}, ${saturation}, 97%)`,
-      `hsl(${hue}, ${saturation}, 95%)`,
-      `hsl(${hue}, ${saturation}, 90%)`,
-      `hsl(${hue}, ${saturation}, 82%)`,
-      `hsl(${hue}, ${saturation}, 71%)`,
-      `hsl(${hue}, ${saturation}, 60%)`,
-      `hsl(${hue}, ${saturation}, 50%)`,
-      `hsl(${hue}, ${saturation}, 41%)`,
-      `hsl(${hue}, ${saturation}, 35%)`,
-      `hsl(${hue}, ${saturation}, 30%)`,
-      `hsl(${hue}, ${saturation}, 16%)`,
-    ];
+    const step = 80 / 10; // Calculate the step size
 
-    const paletteHex = paletteHsl.map((color, index) => {
-      const hexValue = tinycolor(color).toHexString().toUpperCase();
+    const paletteHsl = [];
+
+    for (let i = 0; i <= 10; i++) {
+      const lightness = 90 - i * step; // Calculate the lightness value
+      paletteHsl.push(`hsl(${hue}, ${saturation}, ${lightness}%)`);
+    }
+
+    const palette = paletteHsl.map((color, index) => {
+      const value = tinycolor(color).toHexString();
 
       return {
-        hex: hexValue,
+        hex: value,
         tone: [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950][index],
       };
     });
 
-    setPalette(paletteHex);
+    document.documentElement.style.setProperty("--color-50", palette[0].hex);
+    document.documentElement.style.setProperty("--color-100", palette[1].hex);
+    document.documentElement.style.setProperty("--color-200", palette[2].hex);
+    document.documentElement.style.setProperty("--color-300", palette[3].hex);
+    document.documentElement.style.setProperty("--color-400", palette[4].hex);
+    document.documentElement.style.setProperty("--color-500", palette[5].hex);
+    document.documentElement.style.setProperty("--color-600", palette[6].hex);
+    document.documentElement.style.setProperty("--color-700", palette[7].hex);
+    document.documentElement.style.setProperty("--color-800", palette[8].hex);
+    document.documentElement.style.setProperty("--color-900", palette[9].hex);
+    document.documentElement.style.setProperty("--color-950", palette[10].hex);
+
+    setPalette(palette);
   }
 
   const handleCopy = (tone: string) => {
@@ -54,16 +77,14 @@ export default function MonochromaticPalette({ palette, setPalette }: Props) {
   };
 
   return (
-    <form className="card">
-      <h2 className="title">Monochromatic Palette</h2>
+    <form className="section">
+      <h2 className="section-title">Monochromatic Palette</h2>
 
-      <InputText id="hex" color={hex} handleColor={handleHex} />
-
-      <div className="grid grid-cols-11 gap-1 place-items-center">
+      <div className="flex gap-2 w-1/8">
         {palette?.map((color) => (
           <button
             key={color.tone}
-            className="flex flex-col justify-end items-center w-full h-40 p-2 text-sm rounded-lg active:h-[156px]"
+            className="flex justify-end items-center w-full px-4 py-2 text-sm rounded-full"
             onClick={() => handleCopy(color.hex)}
             type="button"
             style={{
@@ -76,7 +97,6 @@ export default function MonochromaticPalette({ palette, setPalette }: Props) {
             }}
           >
             <span className="font-semibold">{color.tone}</span>
-            <span>{color.hex.slice(1)}</span>
           </button>
         ))}
       </div>

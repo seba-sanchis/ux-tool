@@ -2,72 +2,72 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --ds-gray-1000: hsla(0, 0%, 9%, 1);
-  --ds-gray-200: hsla(0, 0%, 92%, 1);
-  --ds-gray-100: hsla(0, 0%, 95%, 1);
-  --ds-gray-alpha-400: rgba(0, 0, 0, 0.08);
-  --geist-background: #fff;
-  --geist-selection: #0070f3;
-  --hover-color: #fff;
-  --accents-1: #fafafa;
-  --accents-2: #eaeaea;
-  --accents-3: #999;
-  --accents-4: #888;
-  --accents-5: #666;
-  --accents-6: #444;
-  --accents-7: #333;
-  --accents-8: #111;
-  --wv-green: #0cce6b;
-  --wv-orange: #ffa400;
-  --wv-red: #ff4e42;
-  --themed-fg: #fff;
-  --themed-hover-bg: #383838;
-  --nav-background: hsla(0, 0%, 100%, 0.8);
-  color: var(--ds-gray-1000);
+@layer base {
+  :root {
+    --background: #fff;
+    --foreground: #000;
+    /* --hover: #f3f2f2; */
+
+    --accents-1: #fafafa;
+    --accents-2: #eaeaea;
+    --accents-3: #999;
+    --accents-4: #888;
+    --accents-5: #666;
+    --accents-6: #444;
+    --accents-7: #333;
+    --accents-8: #111;
+    --accents-1: #fafafa;
+    --accents-2: #eaeaea;
+    --accents-3: #999;
+    --accents-4: #888;
+    --accents-5: #666;
+    --accents-6: #444;
+    --accents-7: #333;
+    --accents-8: #111;
+
+    /* Shadcn */
+    --background: #fff;
+    --foreground: #000;
+
+    /* --color-50: #FCCFD7;
+    --color-100: #FAA8B6;
+    --color-200: #F88296;
+    --color-300: #F65B75;
+    --color-400: #F33455;
+    --color-500: #f10e35;
+    --color-600: #cb0c2c;
+    --color-700: #A40924;
+    --color-800: #7D071B;
+    --color-900: #570513;
+    --color-950: #30030B; */
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --foreground: #fff;
+      --background: #000;
+
+      --accents-1: #111;
+      --accents-2: #333;
+      --accents-3: #444;
+      --accents-4: #666;
+      --accents-5: #888;
+      --accents-6: #999;
+      --accents-7: #eaeaea;
+      --accents-8: #fafafa;
+    }
+  }
+}
+
+body {
+  color: var(--accents-8);
   background: linear-gradient(
     180deg,
-    var(--geist-background) 30%,
+    var(--background) 30%,
     var(--accents-1) 50%,
     var(--accents-1) 100%
   );
-  min-height: 100%;
-  max-width: 100vw;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --ds-gray-1000: hsla(0, 0%, 93%, 1);
-    --ds-gray-200: hsla(0, 0%, 12%, 1);
-    --ds-gray-100: hsla(0, 0%, 10%, 1);
-    --ds-gray-alpha-400: hsla(0, 0%, 100%, 0.14);
-    --geist-background: #000;
-    --geist-selection: #0070f3;
-    --hover-color: hsla(0, 0%, 100%, 0.02);
-    --accents-1: #111;
-    --accents-2: #333;
-    --accents-3: #444;
-    --accents-4: #666;
-    --accents-5: #888;
-    --accents-6: #999;
-    --accents-7: #eaeaea;
-    --accents-8: #fafafa;
-    --wv-green: #0cce6b;
-    --wv-orange: #ffa400;
-    --wv-red: #ff4e42;
-    --nav-background: rgba(0, 0, 0, 0.8);
-    --themed-fg: #0a0a0a;
-    --themed-hover-bg: #ccc;
-    color: var(--ds-gray-1000);
-    background: linear-gradient(
-      180deg,
-      var(--geist-background) 30%,
-      var(--accents-1) 50%,
-      var(--accents-1) 100%
-    );
-    min-height: 100%;
-    max-width: 100vw;
-  }
+  min-height: 100svh;
 }
 
 @layer utilities {
@@ -76,33 +76,51 @@
   }
 }
 
-.card {
-  @apply flex flex-col gap-4 h-full p-6 rounded-xl border border-[--accents-2];
-}
-
-.card-child {
-  @apply flex flex-col gap-4 p-4 rounded-xl border border-[--accents-2];
-}
-
-.input-container {
-  @apply relative flex flex-col gap-2;
-}
-
-.input {
-  @apply px-3 border-b border-[--accents-2] focus:border-[--geist-selection] outline-none bg-transparent;
-}
-
+/* Geist */
 .title {
-  @apply text-xl font-semibold leading-8;
+  @apply text-3xl font-semibold leading-8;
 }
 
 .subtitle {
-  @apply text-sm text-[--accents-5];
+  @apply text-lg text-[--accents-5];
+}
+
+/* Section */
+.section {
+  @apply flex flex-col gap-4 my-10;
+}
+
+.section-title {
+  @apply text-xl font-semibold leading-8;
+}
+
+.section-subtitle {
+  @apply text-[--accents-5];
+}
+
+/* card */
+.card {
+  @apply flex p-4 border border-[--accents-2] bg-[--background] rounded-lg;
+}
+
+/* Input */
+.input-container {
+  @apply flex items-center px-3 py-2 border border-[--accents-2] focus-within:border-[--accents-3] bg-[--background] rounded-full max-w-fit;
+}
+
+.input {
+  @apply px-3 outline-none bg-transparent;
+}
+
+.picker-container {
+  @apply relative flex justify-center items-center w-8 h-8 overflow-hidden rounded-full border border-[--background];
 }
 
 .picker {
-  @apply flex w-full h-12 border border-[--accents-2] appearance-none bg-transparent cursor-pointer focus:border-[--geist-selection];
+  @apply absolute w-10 h-10 appearance-none bg-transparent cursor-pointer;
 }
+
+/* Button */
 
 .button {
   @apply px-3.5 h-12 text-[--themed-fg] rounded-lg bg-[--ds-gray-1000] hover:bg-[--themed-hover-bg];
@@ -112,6 +130,55 @@
   @apply px-3.5 text-[--ds-gray-1000] bg-[--ds-background-100] shadow-[0_0_0_1px_var(--ds-gray-alpha-400)];
 }
 
-.jiggle {
-  @apply animate-jiggle origin-center will-change-transform;
-}
+/* @tailwind base;
+@tailwind components;
+@tailwind utilities; */
+
+/* :root { */
+
+/* --ds-gray-1000: hsla(0, 0%, 9%, 1);
+  --ds-gray-200: hsla(0, 0%, 92%, 1);
+  --ds-gray-100: hsla(0, 0%, 95%, 1);
+  --ds-gray-alpha-400: rgba(0, 0, 0, 0.08);
+  --selection: #0070f3;
+  --hover-color: #fff;
+
+  --wv-green: #0cce6b;
+  --wv-orange: #ffa400;
+  --wv-red: #ff4e42;
+  --themed-fg: #fff;
+  --themed-hover-bg: #383838;
+  --nav-background: hsla(0, 0%, 100%, 0.8);
+ */
+/* } */
+
+/* @media (prefers-color-scheme: dark) {
+  :root {
+    --foreground: #fff;
+    --background: #000;
+
+    --accents-1: #111;
+    --accents-2: #333;
+    --accents-3: #444;
+    --accents-4: #666;
+    --accents-5: #888;
+    --accents-6: #999;
+    --accents-7: #eaeaea;
+    --accents-8: #fafafa;
+
+   --ds-gray-1000: hsla(0, 0%, 93%, 1);
+    --ds-gray-200: hsla(0, 0%, 12%, 1);
+    --ds-gray-100: hsla(0, 0%, 10%, 1);
+    --ds-gray-alpha-400: hsla(0, 0%, 100%, 0.14);
+    --selection: #0070f3;
+    --hover-color: hsla(0, 0%, 100%, 0.02);
+
+    --wv-green: #0cce6b;
+    --wv-orange: #ffa400;
+    --wv-red: #ff4e42;
+    --nav-background: rgba(0, 0, 0, 0.8);
+    --themed-fg: #0a0a0a;
+    --themed-hover-bg: #ccc;
+
+  }
+} */

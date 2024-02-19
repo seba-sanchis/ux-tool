@@ -2,15 +2,20 @@
 
 import { FaCopy } from "react-icons/fa";
 
-export default function CopyButton({ text }: { text: string }) {
+type Props = { text: string | undefined };
+
+export default function CopyButton({ text }: Props) {
   const handleCopy = () => {
-    navigator.clipboard.writeText(text);
+    if (text) {
+      navigator.clipboard.writeText(text);
+    }
   };
+
   return (
     <button
       type="button"
       onClick={handleCopy}
-      className="absolute right-4 bottom-4 text-[--accents-5] active:text-[--ds-gray-1000]"
+      className="text-[--accents-5] active:text-[--ds-gray-1000]"
     >
       <FaCopy size={16} />
     </button>
