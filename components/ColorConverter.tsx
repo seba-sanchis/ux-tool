@@ -12,15 +12,16 @@ type Props = {
 };
 
 export default function ColorConverter({ color, setColor }: Props) {
-  const [hex, setHex] = useState<string>("");
-  const [hsl, setHsl] = useState<string>("");
-  const [hsv, setHsv] = useState<string>("");
-  const [rgb, setRgb] = useState<string>("");
-  const [tailwind, setTailwind] = useState<string>("");
+  const [hex, setHex] = useState<string>("#000000");
+  // const [hsl, setHsl] = useState<string>("");
+  // const [hsv, setHsv] = useState<string>("");
+  // const [rgb, setRgb] = useState<string>("");
+  // const [tailwind, setTailwind] = useState<string>("");
 
   const handleColor = (value: string) => {
     let convertedColor = tinycolor(value);
 
+    console.log(convertedColor)
     const format = convertedColor.getFormat();
 
     if (!format) {

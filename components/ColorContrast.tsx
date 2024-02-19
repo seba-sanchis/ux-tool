@@ -26,7 +26,7 @@ export default function ColorContrast() {
     <form className="section">
       <h2 className="section-title">Color Contrast</h2>
 
-      <div className="items-centerrounded-lg border border-[--accents-2]">
+      <div className="items-center rounded-lg border border-[--accents-2]">
         <div
           style={{ color: foreground, backgroundColor: background }}
           className="flex flex-col justify-center items-center gap-4 flex-1 p-6 rounded-t-lg"
@@ -40,7 +40,7 @@ export default function ColorContrast() {
           </p>
         </div>
 
-        <div className="flex flex-col items-center gap-6 flex-1 p-4">
+        <div className="flex flex-col items-center gap-6 flex-1 p-6">
           <div className="flex flex-col items-center gap-4">
             <div
               className={`flex flex-col justify-between items-center w-full  ${

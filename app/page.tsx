@@ -7,7 +7,7 @@ import MonochromaticPalette from "@/components/MonochromaticPalette";
 import DesignSystem from "@/components/DesignSystem";
 
 export default function Home() {
-  const [color, setColor] = useState<string>("");
+  const [color, setColor] = useState<string>("#000000");
   const [palette, setPalette] = useState<
     { hex: string; tone: number; variable: string }[]
   >([]);
