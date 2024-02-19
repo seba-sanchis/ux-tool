@@ -74,7 +74,7 @@ export default function ColorConverter({ color, setColor }: Props) {
           id="color"
           color={color}
           handleColor={handleColor}
-          containerStyle=""
+          containerStyle="flex flex-1"
           inputStyle="input"
           type="text"
         />

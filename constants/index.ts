@@ -129,7 +129,7 @@ export { Calendar };
 ];
 
 export const features = [
-  { name: "Design", url: "/design" },
+  { name: "Design", url: "/" },
   { name: "Accessibility", url: "/accessibility" },
 ];
 

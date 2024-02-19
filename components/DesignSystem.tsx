@@ -33,14 +33,14 @@ export default function DesignSystem({ palette, isDarkMode }: Props) {
     <section className="section">
       <h2 className="section-title">Design System</h2>
 
-      <div className="flex">
-        <ul className="relative -left-4 flex flex-col">
+      <div className="flex gap-4">
+        <ul className="-ml-4 flex flex-col gap-2 w-64">
           {components.map((item) => (
             <li
               key={item.name}
               className={`text-[--accents-6] px-4 py-2 rounded-lg cursor-pointer whitespace-nowrap ${
                 activeItem === item.name
-                  ? "text-[--foreground] bg-[--accents-2]"
+                  ? "text-[--foreground] bg-[--hover]"
                   : "hover:text-[--foreground] hover:bg-[--accents-1]"
               }`}
               onClick={() => handleItem(item.name)}
@@ -99,95 +99,4 @@ export default function DesignSystem({ palette, isDarkMode }: Props) {
       </div>
     </section>
   );
-}
-
-{
-  /* <div className="flex justify-center gap-6">
-            <div className="flex flex-col gap-2">
-              <span className="section-subtitle text-center">Default</span>
-              <button
-                className="px-4 h-12 rounded-lg"
-                style={{
-                  backgroundColor: `${
-                    palette && isDarkMode
-                      ? palette[4]?.hex
-                      : palette
-                      ? palette[5]?.hex
-                      : ""
-                  }`,
-                  color: `${
-                    palette && isDarkMode ? palette[10]?.hex : "white"
-                  }`,
-                }}
-              >
-                Button
-              </button>
-            </div>
-            <div className="flex flex-col gap-2">
-              <span className="section-subtitle text-center">Hover</span>
-              <button
-                className="px-4 h-12 rounded-lg"
-                style={{
-                  backgroundColor: `${
-                    palette && isDarkMode
-                      ? palette[3]?.hex
-                      : palette
-                      ? palette[6]?.hex
-                      : ""
-                  }`,
-                  color: `${
-                    palette && isDarkMode ? palette[10]?.hex : "white"
-                  }`,
-                }}
-              >
-                Button
-              </button>
-            </div>
-
-            <div className="flex flex-col gap-2">
-              <span className="section-subtitle text-center">Active</span>
-              <button
-                className="px-4 h-12 rounded-lg"
-                style={{
-                  backgroundColor: `${
-                    palette && isDarkMode
-                      ? palette[5]?.hex
-                      : palette
-                      ? palette[7]?.hex
-                      : ""
-                  }`,
-                  color: `${
-                    palette && isDarkMode ? palette[10]?.hex : "white"
-                  }`,
-                }}
-              >
-                Button
-              </button>
-            </div>
-
-            <div className="flex flex-col gap-2">
-              <span className="section-subtitle text-center">Disable</span>
-              <button
-                className="px-4 h-12 rounded-lg"
-                style={{
-                  backgroundColor: `${
-                    palette && isDarkMode
-                      ? palette[8]?.hex
-                      : palette
-                      ? palette[2]?.hex
-                      : ""
-                  }`,
-                  color: `${
-                    palette && isDarkMode
-                      ? palette[1]?.hex
-                      : palette
-                      ? palette[7]?.hex
-                      : ""
-                  }`,
-                }}
-              >
-                Button
-              </button>
-            </div>
-          </div> */
 }

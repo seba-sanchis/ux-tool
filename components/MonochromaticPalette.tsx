@@ -7,9 +7,9 @@ import { palette as p } from "@/constants";
 
 type Props = {
   color: string;
-  palette: { hex: string; tone: number }[];
+  palette: { hex: string; tone: number; variable: string }[];
   setPalette: React.Dispatch<
-    React.SetStateAction<{ hex: string; tone: number }[]>
+    React.SetStateAction<{ hex: string; tone: number; variable: string }[]>
   >;
 };
 
@@ -39,11 +39,11 @@ export default function MonochromaticPalette({
 
     const saturation = hsl.s;
 
-    const step = 80 / 10; // Calculate the step size
+    const step = 80 / 9; // Calculate the step size for 10 colors
 
     const paletteHsl = [];
 
-    for (let i = 0; i <= 10; i++) {
+    for (let i = 0; i < 10; i++) {
       const lightness = 90 - i * step; // Calculate the lightness value
       paletteHsl.push(`hsl(${hue}, ${saturation}, ${lightness}%)`);
     }
@@ -53,21 +53,32 @@ export default function MonochromaticPalette({
 
       return {
         hex: value,
-        tone: [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950][index],
+        tone: [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000][index],
+        variable: [
+          "var(--color-100)",
+          "var(--color-200)",
+          "var(--color-300)",
+          "var(--color-400)",
+          "var(--color-500)",
+          "var(--color-600)",
+          "var(--color-700)",
+          "var(--color-800)",
+          "var(--color-900)",
+          "var(--color-1000)",
+        ][index],
       };
     });
 
-    document.documentElement.style.setProperty("--color-50", palette[0].hex);
-    document.documentElement.style.setProperty("--color-100", palette[1].hex);
-    document.documentElement.style.setProperty("--color-200", palette[2].hex);
-    document.documentElement.style.setProperty("--color-300", palette[3].hex);
-    document.documentElement.style.setProperty("--color-400", palette[4].hex);
-    document.documentElement.style.setProperty("--color-500", palette[5].hex);
-    document.documentElement.style.setProperty("--color-600", palette[6].hex);
-    document.documentElement.style.setProperty("--color-700", palette[7].hex);
-    document.documentElement.style.setProperty("--color-800", palette[8].hex);
-    document.documentElement.style.setProperty("--color-900", palette[9].hex);
-    document.documentElement.style.setProperty("--color-950", palette[10].hex);
+    document.documentElement.style.setProperty("--color-100", palette[0].hex);
+    document.documentElement.style.setProperty("--color-200", palette[1].hex);
+    document.documentElement.style.setProperty("--color-300", palette[2].hex);
+    document.documentElement.style.setProperty("--color-400", palette[3].hex);
+    document.documentElement.style.setProperty("--color-500", palette[4].hex);
+    document.documentElement.style.setProperty("--color-600", palette[5].hex);
+    document.documentElement.style.setProperty("--color-700", palette[6].hex);
+    document.documentElement.style.setProperty("--color-800", palette[7].hex);
+    document.documentElement.style.setProperty("--color-900", palette[8].hex);
+    document.documentElement.style.setProperty("--color-1000", palette[9].hex);
 
     setPalette(palette);
   }
@@ -80,23 +91,29 @@ export default function MonochromaticPalette({
     <form className="section">
       <h2 className="section-title">Monochromatic Palette</h2>
 
-      <div className="flex gap-2 w-1/8">
+      <div className="grid grid-cols-5 gap-6">
         {palette?.map((color) => (
           <button
             key={color.tone}
-            className="flex justify-end items-center w-full px-4 py-2 text-sm rounded-full"
+            className="flex items-center p-2 -m-2 gap-4 rounded-lg hover:bg-[--hover]"
             onClick={() => handleCopy(color.hex)}
             type="button"
-            style={{
-              backgroundColor: color.hex,
-              color: `${
-                tinycolor.isReadable(color.hex, palette[9]?.hex)
-                  ? palette[9]?.hex
-                  : palette[1]?.hex
-              }`,
-            }}
           >
-            <span className="font-semibold">{color.tone}</span>
+            <div
+              className="w-12 h-12 rounded-lg"
+              style={{
+                backgroundColor: color.hex,
+                color: `${
+                  tinycolor.isReadable(color.hex, palette[9]?.hex)
+                    ? palette[9]?.hex
+                    : palette[1]?.hex
+                }`,
+              }}
+            ></div>
+            <div className="flex flex-col items-start whitespace-nowrap">
+              <div className="text-sm text-[--gray-1000]">{color.variable}</div>
+              <div className="text-sm text-[--gray-900]">{color.hex}</div>
+            </div>
           </button>
         ))}
       </div>

@@ -6,7 +6,7 @@
   :root {
     --background: #fff;
     --foreground: #000;
-    /* --hover: #f3f2f2; */
+    --hover: #f3f2f2;
 
     --accents-1: #fafafa;
     --accents-2: #eaeaea;
@@ -16,36 +16,28 @@
     --accents-6: #444;
     --accents-7: #333;
     --accents-8: #111;
-    --accents-1: #fafafa;
-    --accents-2: #eaeaea;
-    --accents-3: #999;
-    --accents-4: #888;
-    --accents-5: #666;
-    --accents-6: #444;
-    --accents-7: #333;
-    --accents-8: #111;
 
-    /* Shadcn */
-    --background: #fff;
-    --foreground: #000;
+    --gray-100: #f2f2f2;
+    --gray-200: #e6e6e6;
+    --gray-300: #e0e0e0;
+    --gray-400: #e6e6e6;
+    --gray-500: #cccccc;
+    --gray-600: #a6a6a6;
+    --gray-700: #8c8c8c;
+    --gray-800: #7d7d7d;
+    --gray-900: #666666;
+    --gray-1000: #262626;
 
-    /* --color-50: #FCCFD7;
-    --color-100: #FAA8B6;
-    --color-200: #F88296;
-    --color-300: #F65B75;
-    --color-400: #F33455;
-    --color-500: #f10e35;
-    --color-600: #cb0c2c;
-    --color-700: #A40924;
-    --color-800: #7D071B;
-    --color-900: #570513;
-    --color-950: #30030B; */
+    --green: #0cce6b;
+    --orange: #ffa400;
+    --red: #ff4e42;
   }
 
   @media (prefers-color-scheme: dark) {
     :root {
       --foreground: #fff;
       --background: #000;
+      --hover: #232323;
 
       --accents-1: #111;
       --accents-2: #333;
@@ -55,18 +47,28 @@
       --accents-6: #999;
       --accents-7: #eaeaea;
       --accents-8: #fafafa;
+
+      --gray-100: #1a1a1a;
+      --gray-200: #202020;
+      --gray-300: #282828;
+      --gray-400: #2e2e2e;
+      --gray-500: #454545;
+      --gray-600: #878787;
+      --gray-700: #8c8c8c;
+      --gray-800: #7d7d7d;
+      --gray-900: #a3a3a3;
+      --gray-1000: #ededed;
+
+      --green: #0cce6b;
+      --orange: #ffa400;
+      --red: #ff4e42;
     }
   }
 }
 
 body {
-  color: var(--accents-8);
-  background: linear-gradient(
-    180deg,
-    var(--background) 30%,
-    var(--accents-1) 50%,
-    var(--accents-1) 100%
-  );
+  color: var(--foreground);
+  background: var(--background);
   min-height: 100svh;
 }
 
@@ -105,80 +107,17 @@ body {
 
 /* Input */
 .input-container {
-  @apply flex items-center px-3 py-2 border border-[--accents-2] focus-within:border-[--accents-3] bg-[--background] rounded-full max-w-fit;
+  @apply flex items-center gap-2 px-2 border border-[--accents-2] focus-within:border-[--accents-3] bg-[--background] rounded-lg max-w-64;
 }
 
 .input {
-  @apply px-3 outline-none bg-transparent;
+  @apply px-3 py-2 w-full outline-none bg-transparent border-l border-[--accents-2];
 }
 
 .picker-container {
-  @apply relative flex justify-center items-center w-8 h-8 overflow-hidden rounded-full border border-[--background];
+  @apply relative flex justify-center items-center w-7 h-7 overflow-hidden rounded-lg border border-[--background];
 }
 
 .picker {
   @apply absolute w-10 h-10 appearance-none bg-transparent cursor-pointer;
 }
-
-/* Button */
-
-.button {
-  @apply px-3.5 h-12 text-[--themed-fg] rounded-lg bg-[--ds-gray-1000] hover:bg-[--themed-hover-bg];
-}
-
-.button-outlined {
-  @apply px-3.5 text-[--ds-gray-1000] bg-[--ds-background-100] shadow-[0_0_0_1px_var(--ds-gray-alpha-400)];
-}
-
-/* @tailwind base;
-@tailwind components;
-@tailwind utilities; */
-
-/* :root { */
-
-/* --ds-gray-1000: hsla(0, 0%, 9%, 1);
-  --ds-gray-200: hsla(0, 0%, 92%, 1);
-  --ds-gray-100: hsla(0, 0%, 95%, 1);
-  --ds-gray-alpha-400: rgba(0, 0, 0, 0.08);
-  --selection: #0070f3;
-  --hover-color: #fff;
-
-  --wv-green: #0cce6b;
-  --wv-orange: #ffa400;
-  --wv-red: #ff4e42;
-  --themed-fg: #fff;
-  --themed-hover-bg: #383838;
-  --nav-background: hsla(0, 0%, 100%, 0.8);
- */
-/* } */
-
-/* @media (prefers-color-scheme: dark) {
-  :root {
-    --foreground: #fff;
-    --background: #000;
-
-    --accents-1: #111;
-    --accents-2: #333;
-    --accents-3: #444;
-    --accents-4: #666;
-    --accents-5: #888;
-    --accents-6: #999;
-    --accents-7: #eaeaea;
-    --accents-8: #fafafa;
-
-   --ds-gray-1000: hsla(0, 0%, 93%, 1);
-    --ds-gray-200: hsla(0, 0%, 12%, 1);
-    --ds-gray-100: hsla(0, 0%, 10%, 1);
-    --ds-gray-alpha-400: hsla(0, 0%, 100%, 0.14);
-    --selection: #0070f3;
-    --hover-color: hsla(0, 0%, 100%, 0.02);
-
-    --wv-green: #0cce6b;
-    --wv-orange: #ffa400;
-    --wv-red: #ff4e42;
-    --nav-background: rgba(0, 0, 0, 0.8);
-    --themed-fg: #0a0a0a;
-    --themed-hover-bg: #ccc;
-
-  }
-} */

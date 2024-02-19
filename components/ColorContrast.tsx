@@ -2,13 +2,13 @@
 
 import { useEffect, useState } from "react";
 import tinycolor from "tinycolor2";
-import Foreground from "./Foreground";
-import Background from "./Background";
+import ColorCard from "./ColorCard";
+import { FaRegStar, FaStar } from "react-icons/fa";
 
 export default function ColorContrast() {
   const [foreground, setForeground] = useState("");
   const [background, setBackground] = useState("");
-  const [contrastRatio, setContrastRatio] = useState<number | null>(null);
+  const [contrastRatio, setContrastRatio] = useState<number>(1);
 
   useEffect(() => {
     handleReadability();
@@ -23,69 +23,142 @@ export default function ColorContrast() {
   };
 
   return (
-    <form className="card col-span-2">
-      <h2 className="title">Color Contrast</h2>
+    <form className="section">
+      <h2 className="section-title">Color Contrast</h2>
 
-      <div className="grid grid-cols-4 gap-6">
+      <div className="items-centerrounded-lg border border-[--accents-2]">
         <div
-          className="card-child col-span-2"
           style={{ color: foreground, backgroundColor: background }}
+          className="flex flex-col justify-center items-center gap-4 flex-1 p-6 rounded-t-lg"
         >
-          <span className="text-3xl">Large sample text.</span>
-          <span>Small sample text.</span>
+          <div className="text-3xl">How does it work?</div>
+          <p>
+            This tool follows the Web Content Accessibility Guidelines (WCAG),
+            which are a series of recommendations for making the web more
+            accessible. Regarding colors, the standard defines two levels of
+            contrast ratio: AA (minimum contrast) and AAA (enhanced contrast).
+          </p>
         </div>
 
-        <div className="card-child justify-center">
-          {contrastRatio && (
-            <div className="flex flex-1">
-              <div className="flex flex-col w-full">
-                <h3>Contrast Ratio</h3>
-                <div className="flex justify-center items-center flex-1">
-                  <span
-                    className={`text-xl ${
-                      contrastRatio >= 4.5
-                        ? "text-[--wv-green]"
-                        : contrastRatio >= 3
-                        ? "text-[--wv-orange]"
-                        : "text-[--wv-red]"
-                    }`}
-                  >
-                    {contrastRatio}
-                  </span>
+        <div className="flex flex-col items-center gap-6 flex-1 p-4">
+          <div className="flex flex-col items-center gap-4">
+            <div
+              className={`flex flex-col justify-between items-center w-full  ${
+                contrastRatio >= 7
+                  ? "text-[--green]"
+                  : contrastRatio >= 4.5
+                  ? "text-[--orange]"
+                  : "text-[--red]"
+              }`}
+            >
+              <div className="text-3xl semibold">{contrastRatio}</div>
+              <div className="flex items-center gap-2">
+                <div>
+                  {contrastRatio >= 7
+                    ? "Very good"
+                    : contrastRatio >= 4.5
+                    ? "Good"
+                    : contrastRatio >= 3
+                    ? "Poor"
+                    : "Very poor"}
+                </div>
+                <div className="flex gap-2">
+                  {contrastRatio >= 7 ? (
+                    <>
+                      <FaStar />
+                      <FaStar />
+                      <FaStar />
+                    </>
+                  ) : contrastRatio >= 4.5 ? (
+                    <>
+                      <FaStar />
+                      <FaStar />
+                      <FaRegStar />
+                    </>
+                  ) : contrastRatio >= 3 ? (
+                    <>
+                      <FaStar />
+                      <FaRegStar />
+                      <FaRegStar />
+                    </>
+                  ) : (
+                    <>
+                      <FaRegStar />
+                      <FaRegStar />
+                      <FaRegStar />
+                    </>
+                  )}
                 </div>
               </div>
             </div>
-          )}
-        </div>
 
-        <div className="card-child justify-center">
-          {contrastRatio && (
-            <div className="flex flex-col flex-1">
-              <h3>Level</h3>
-              <ul className="flex flex-col justify-center items-center flex-1">
-                <li
-                  className={`${
-                    contrastRatio >= 4.5
-                      ? "text-[--wv-green]"
-                      : "text-[--wv-red]"
-                  }`}
-                >
-                  AAA
-                </li>
-                <li
-                  className={`${
-                    contrastRatio >= 3 ? "text-[--wv-green]" : "text-[--wv-red]"
-                  }`}
-                >
-                  AA
-                </li>
-              </ul>
+            <div className="flex gap-6">
+              <div
+                className={`flex items-center flex-1 gap-4 ${
+                  contrastRatio >= 7
+                    ? "text-[--green]"
+                    : contrastRatio >= 4.5
+                    ? "text-[--orange]"
+                    : "text-[--red]"
+                }`}
+              >
+                <div>Small text</div>
+                <div className="flex gap-2">
+                  {contrastRatio >= 7 ? (
+                    <>
+                      <FaStar />
+                      <FaStar />
+                    </>
+                  ) : contrastRatio >= 4.5 ? (
+                    <>
+                      <FaStar />
+                      <FaRegStar />
+                    </>
+                  ) : (
+                    <>
+                      <FaRegStar />
+                      <FaRegStar />
+                    </>
+                  )}
+                </div>
+              </div>
+              <div
+                className={`flex items-center gap-4 ${
+                  contrastRatio >= 4.5
+                    ? "text-[--green]"
+                    : contrastRatio >= 3
+                    ? "text-[--orange]"
+                    : "text-[--red]"
+                }`}
+              >
+                <div>Large text</div>
+                <div className="flex gap-2">
+                  {contrastRatio >= 4.5 ? (
+                    <>
+                      <FaStar />
+                      <FaStar />
+                    </>
+                  ) : contrastRatio >= 3 ? (
+                    <>
+                      <FaStar />
+                      <FaRegStar />
+                    </>
+                  ) : (
+                    <>
+                      <FaRegStar />
+                      <FaRegStar />
+                    </>
+                  )}
+                </div>
+              </div>
             </div>
-          )}
-        </div>
+          </div>
 
-        <Foreground setForeground={setForeground} />
-        <Background setBackground={setBackground} />
+          <div className="flex justify-center gap-6 w-fit">
+            <ColorCard name="Foreground" setForeground={setForeground} />
+            <ColorCard name="Background" setBackground={setBackground} />
+          </div>
+        </div>
       </div>
     </form>
   );

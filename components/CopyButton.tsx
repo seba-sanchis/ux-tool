@@ -15,7 +15,7 @@ export default function CopyButton({ text }: Props) {
     <button
       type="button"
       onClick={handleCopy}
-      className="text-[--accents-5] active:text-[--ds-gray-1000]"
+      className="text-[--accents-5] active:text-[--gray-1000]"
     >
       <FaCopy size={16} />
     </button>

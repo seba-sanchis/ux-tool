@@ -8,7 +8,9 @@ import DesignSystem from "@/components/DesignSystem";
 
 export default function Home() {
   const [color, setColor] = useState<string>("");
-  const [palette, setPalette] = useState<{ hex: string; tone: number }[]>([]);
+  const [palette, setPalette] = useState<
+    { hex: string; tone: number; variable: string }[]
+  >([]);
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   useEffect(() => {

@@ -25,7 +25,7 @@ export default function Input({
     <>
       {type === "range" && handleLightness && (
         <div className={containerStyle}>
-          <label htmlFor="lightness" className="subtitle">
+          <label htmlFor={id} className="sr-only">
             {id}
           </label>
           <span className="relative">
@@ -39,7 +39,7 @@ export default function Input({
               className={inputStyle}
             />
             <div
-              className={`inline-block absolute top-2 left-0 w-full h-1`}
+              className={`inline-block absolute top-2 left-0 w-full h-1 rounded-lg`}
               style={{
                 backgroundImage: `linear-gradient(90deg,rgb(0,0,0),${rgb},rgb(255,255,255))`,
               }}
@@ -49,7 +49,7 @@ export default function Input({
       )}
       {(type === "text" || type === "color") && handleColor && (
         <div className={containerStyle}>
-          <label htmlFor={id} className="subtitle sr-only">
+          <label htmlFor={id} className="sr-only">
             {id}
           </label>
           <input
