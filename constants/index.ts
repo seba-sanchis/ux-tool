@@ -9,12 +9,12 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-[--background] bg-[--color-500] hover:bg-[--color-600] active:bg-[--color-700] disabled:text-[--color-700] disabled:bg-[--color-200]",
+  "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-[--background] bg-[var(--color-500)] hover:bg-[var(--color-600)] active:bg-[var(--color-700)] disabled:text-[var(--color-700)] disabled:bg-[var(--color-200)]",
   {
     variants: {
       variant: {
         default:
-          "text-[--background] bg-[--color-500] hover:bg-[--color-400] active:bg-[--color-600] disabled:text-[--color-700] disabled:bg-[--color-200]",
+          "text-[--background] bg-[var(--color-500)] hover:bg-[var(--color-600)] active:bg-[var(--color-700)] disabled:text-[var(--color-700)] disabled:bg-[var(--color-200)]",
         destructive:
           "bg-destructive text-destructive-foreground hover:bg-destructive/90",
         outline:
@@ -25,7 +25,7 @@ const buttonVariants = cva(
         link: "text-primary underline-offset-4 hover:underline",
       },
       size: {
-        default: "h-10 px-4 py-2",
+        default: "h-10 px-4 py-2 rounded-lg",
         sm: "h-9 rounded-md px-3",
         lg: "h-11 rounded-md px-8",
         icon: "h-10 w-10",
@@ -101,10 +101,11 @@ function Calendar({
           "text-muted-foreground rounded-md w-9 font-normal text-[0.8rem]",
         row: "flex w-full mt-2",
         cell: "h-9 w-9 text-center text-sm p-0 relative [&:has([aria-selected].day-range-end)]:rounded-r-md [&:has([aria-selected].day-outside)]:bg-accent/50 [&:has([aria-selected])]:bg-accent first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20",
-        day: "h-9 w-9 p-0 font-normal aria-selected:opacity-100 rounded-lg hover:bg-[--color-100]",
+        day: "h-9 w-9 p-0 font-normal rounded-lg hover:bg-[var(--color-100)]",
         day_range_end: "day-range-end",
-        day_selected: "focus:bg-[--color-500] focus:text-[--background]",
-        day_today: "bg-[--color-100] text-accent-foreground",
+        day_selected:
+          "focus:bg-[var(--color-500)] focus:text-[var(--background)]",
+        day_today: "bg-[var(--color-100)] text-accent-foreground",
         day_outside:
           "day-outside text-muted-foreground opacity-50 aria-selected:bg-accent/50 aria-selected:text-muted-foreground aria-selected:opacity-30",
         day_disabled: "text-muted-foreground opacity-50",
@@ -126,11 +127,473 @@ Calendar.displayName = "Calendar";
 export { Calendar };
     `,
   },
+  {
+    name: "Input",
+    path: "components/ui/input.tsx",
+    code: `import * as React from "react";
+    import { cn } from "@/lib/utils";
+    
+    const Input = React.forwardRef<
+      HTMLInputElement,
+      React.InputHTMLAttributes<HTMLInputElement>
+    >(({ className, type, ...props }, ref) => {
+      return (
+        <input
+          type={type}
+          className={cn(
+            "flex h-10 w-full rounded-md border bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-500)] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+            "text-[var(--foreground]",
+            className
+          )}
+          ref={ref}
+          {...props}
+        />
+      );
+    });
+    Input.displayName = "Input";
+    
+    export { Input };
+    `,
+  },
+  {
+    name: "Navigation Menu",
+    path: "components/ui/navigation-menu.tsx",
+    code: `import * as React from "react";
+import * as NavigationMenuPrimitive from "@radix-ui/react-navigation-menu";
+import { cva } from "class-variance-authority";
+import { ChevronDown } from "lucide-react";
+
+import { cn } from "@/lib/utils";
+
+const NavigationMenu = React.forwardRef<
+  React.ElementRef<typeof NavigationMenuPrimitive.Root>,
+  React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitive.Root>
+>(({ className, children, ...props }, ref) => (
+  <NavigationMenuPrimitive.Root
+    ref={ref}
+    className={cn(
+      "relative z-10 flex max-w-max flex-1 items-center justify-center",
+      className
+    )}
+    {...props}
+  >
+    {children}
+    <NavigationMenuViewport />
+  </NavigationMenuPrimitive.Root>
+));
+NavigationMenu.displayName = NavigationMenuPrimitive.Root.displayName;
+
+const NavigationMenuList = React.forwardRef<
+  React.ElementRef<typeof NavigationMenuPrimitive.List>,
+  React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitive.List>
+>(({ className, ...props }, ref) => (
+  <NavigationMenuPrimitive.List
+    ref={ref}
+    className={cn(
+      "group flex flex-1 list-none items-center justify-center space-x-1",
+      className
+    )}
+    {...props}
+  />
+));
+NavigationMenuList.displayName = NavigationMenuPrimitive.List.displayName;
+
+const NavigationMenuItem = NavigationMenuPrimitive.Item;
+
+const navigationMenuTriggerStyle = cva(
+  "group inline-flex h-10 w-max items-center justify-center rounded-md bg-[var(--background)] px-4 py-2 text-sm font-medium transition-colors hover:bg-[var(--color-600)] hover:text-[var(--color-100)] focus:bg-[var(--color-600)] focus:text-[var(--color-100)] focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-[var(--color-500)] data-[state=open]:bg-[var(--color-500)]"
+);
+
+const NavigationMenuTrigger = React.forwardRef<
+  React.ElementRef<typeof NavigationMenuPrimitive.Trigger>,
+  React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitive.Trigger>
+>(({ className, children, ...props }, ref) => (
+  <NavigationMenuPrimitive.Trigger
+    ref={ref}
+    className={cn(navigationMenuTriggerStyle(), "group", className)}
+    {...props}
+  >
+    {children}{" "}
+    <ChevronDown
+      className="relative top-[1px] ml-1 h-3 w-3 transition duration-200 group-data-[state=open]:rotate-180"
+      aria-hidden="true"
+    />
+  </NavigationMenuPrimitive.Trigger>
+));
+NavigationMenuTrigger.displayName = NavigationMenuPrimitive.Trigger.displayName;
+
+const NavigationMenuContent = React.forwardRef<
+  React.ElementRef<typeof NavigationMenuPrimitive.Content>,
+  React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitive.Content>
+>(({ className, ...props }, ref) => (
+  <NavigationMenuPrimitive.Content
+    ref={ref}
+    className={cn(
+      "left-0 top-0 w-full transform-gpu data-[motion^=from-]:animate-in data-[motion^=to-]:animate-out data-[motion^=from-]:fade-in data-[motion^=to-]:fade-out data-[motion=from-end]:slide-in-from-right-52 data-[motion=from-start]:slide-in-from-left-52 data-[motion=to-end]:slide-out-to-right-52 data-[motion=to-start]:slide-out-to-left-52 md:absolute md:w-auto ",
+      className
+    )}
+    {...props}
+  />
+));
+NavigationMenuContent.displayName = NavigationMenuPrimitive.Content.displayName;
+
+const NavigationMenuLink = NavigationMenuPrimitive.Link;
+
+const NavigationMenuViewport = React.forwardRef<
+  React.ElementRef<typeof NavigationMenuPrimitive.Viewport>,
+  React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitive.Viewport>
+>(({ className, ...props }, ref) => (
+  <div className={cn("absolute left-0 top-full flex justify-center")}>
+    <NavigationMenuPrimitive.Viewport
+      className={cn(
+        "origin-top-center relative mt-1.5 h-[var(--radix-navigation-menu-viewport-height)] w-full overflow-hidden rounded-md border bg-[var(--background)] text-popover-foreground shadow-lg data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-90 md:w-[var(--radix-navigation-menu-viewport-width)]",
+        className
+      )}
+      ref={ref}
+      {...props}
+    />
+  </div>
+));
+NavigationMenuViewport.displayName =
+  NavigationMenuPrimitive.Viewport.displayName;
+
+const NavigationMenuIndicator = React.forwardRef<
+  React.ElementRef<typeof NavigationMenuPrimitive.Indicator>,
+  React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitive.Indicator>
+>(({ className, ...props }, ref) => (
+  <NavigationMenuPrimitive.Indicator
+    ref={ref}
+    className={cn(
+      "top-full z-[1] flex h-1.5 items-end justify-center overflow-hidden data-[state=visible]:animate-in data-[state=hidden]:animate-out data-[state=hidden]:fade-out data-[state=visible]:fade-in",
+      className
+    )}
+    {...props}
+  >
+    <div className="relative top-[60%] h-2 w-2 rotate-45 rounded-tl-sm bg-border shadow-md" />
+  </NavigationMenuPrimitive.Indicator>
+));
+NavigationMenuIndicator.displayName =
+  NavigationMenuPrimitive.Indicator.displayName;
+
+export {
+  navigationMenuTriggerStyle,
+  NavigationMenu,
+  NavigationMenuList,
+  NavigationMenuItem,
+  NavigationMenuContent,
+  NavigationMenuTrigger,
+  NavigationMenuLink,
+  NavigationMenuIndicator,
+  NavigationMenuViewport,
+};
+    `,
+  },
+  {
+    name: "Pagination",
+    path: "components/ui/pagination.tsx",
+    code: `import * as React from "react";
+import { ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react";
+
+import { cn } from "@/lib/utils";
+import { ButtonProps, buttonVariants } from "@/components/ui/button";
+
+const Pagination = ({ className, ...props }: React.ComponentProps<"nav">) => (
+  <nav
+    role="navigation"
+    aria-label="pagination"
+    className={cn("mx-auto flex w-full justify-center", className)}
+    {...props}
+  />
+);
+Pagination.displayName = "Pagination";
+
+const PaginationContent = React.forwardRef<
+  HTMLUListElement,
+  React.ComponentProps<"ul">
+>(({ className, ...props }, ref) => (
+  <ul
+    ref={ref}
+    className={cn("flex flex-row items-center gap-1", className)}
+    {...props}
+  />
+));
+PaginationContent.displayName = "PaginationContent";
+
+const PaginationItem = React.forwardRef<
+  HTMLLIElement,
+  React.ComponentProps<"li">
+>(({ className, ...props }, ref) => (
+  <li ref={ref} className={cn("", className)} {...props} />
+));
+PaginationItem.displayName = "PaginationItem";
+
+type PaginationLinkProps = {
+  isActive?: boolean;
+} & Pick<ButtonProps, "size"> &
+  React.ComponentProps<"a">;
+
+const PaginationLink = ({
+  className,
+  isActive,
+  size = "icon",
+  ...props
+}: PaginationLinkProps) => (
+  <a
+    aria-current={isActive ? "page" : undefined}
+    className={cn(
+      buttonVariants({
+        variant: isActive ? "outline" : "ghost",
+        size,
+      }),
+      className
+    )}
+    {...props}
+  />
+);
+PaginationLink.displayName = "PaginationLink";
+
+const PaginationPrevious = ({
+  className,
+  ...props
+}: React.ComponentProps<typeof PaginationLink>) => (
+  <PaginationLink
+    aria-label="Go to previous page"
+    size="default"
+    className={cn("gap-1 pl-2.5", className)}
+    {...props}
+  >
+    <ChevronLeft className="h-4 w-4" />
+    <span>Previous</span>
+  </PaginationLink>
+);
+PaginationPrevious.displayName = "PaginationPrevious";
+
+const PaginationNext = ({
+  className,
+  ...props
+}: React.ComponentProps<typeof PaginationLink>) => (
+  <PaginationLink
+    aria-label="Go to next page"
+    size="default"
+    className={cn("gap-1 pr-2.5", className)}
+    {...props}
+  >
+    <span>Next</span>
+    <ChevronRight className="h-4 w-4" />
+  </PaginationLink>
+);
+PaginationNext.displayName = "PaginationNext";
+
+const PaginationEllipsis = ({
+  className,
+  ...props
+}: React.ComponentProps<"span">) => (
+  <span
+    aria-hidden
+    className={cn("flex h-9 w-9 items-center justify-center", className)}
+    {...props}
+  >
+    <MoreHorizontal className="h-4 w-4" />
+    <span className="sr-only">More pages</span>
+  </span>
+);
+PaginationEllipsis.displayName = "PaginationEllipsis";
+
+export {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+};
+    `,
+  },
+  {
+    name: "Table",
+    path: "components/ui/table.tsx",
+    code: `import * as React from "react";
+import { cn } from "@/lib/utils";
+
+const Table = React.forwardRef<
+  HTMLTableElement,
+  React.HTMLAttributes<HTMLTableElement>
+>(({ className, ...props }, ref) => (
+  <div className="relative w-full overflow-auto">
+    <table
+      ref={ref}
+      className={cn("w-full caption-bottom text-sm", className)}
+      {...props}
+    />
+  </div>
+));
+Table.displayName = "Table";
+
+const TableHeader = React.forwardRef<
+  HTMLTableSectionElement,
+  React.HTMLAttributes<HTMLTableSectionElement>
+>(({ className, ...props }, ref) => (
+  <thead ref={ref} className={cn("[&_tr]:border-b", className)} {...props} />
+));
+TableHeader.displayName = "TableHeader";
+
+const TableBody = React.forwardRef<
+  HTMLTableSectionElement,
+  React.HTMLAttributes<HTMLTableSectionElement>
+>(({ className, ...props }, ref) => (
+  <tbody
+    ref={ref}
+    className={cn("[&_tr:last-child]:border-0", className)}
+    {...props}
+  />
+));
+TableBody.displayName = "TableBody";
+
+const TableFooter = React.forwardRef<
+  HTMLTableSectionElement,
+  React.HTMLAttributes<HTMLTableSectionElement>
+>(({ className, ...props }, ref) => (
+  <tfoot
+    ref={ref}
+    className={cn(
+      "border-t border-[var(--color-700)] bg-[var(--color-100)] font-medium [&>tr]:last:border-b-0",
+      className
+    )}
+    {...props}
+  />
+));
+TableFooter.displayName = "TableFooter";
+
+const TableRow = React.forwardRef<
+  HTMLTableRowElement,
+  React.HTMLAttributes<HTMLTableRowElement>
+>(({ className, ...props }, ref) => (
+  <tr
+    ref={ref}
+    className={cn(
+      "border-b border-[var(--color-500)] transition-colors hover:bg-[var(--color-200)] data-[state=selected]:bg-[var(--color-100)]",
+      className
+    )}
+    {...props}
+  />
+));
+TableRow.displayName = "TableRow";
+
+const TableHead = React.forwardRef<
+  HTMLTableCellElement,
+  React.ThHTMLAttributes<HTMLTableCellElement>
+>(({ className, ...props }, ref) => (
+  <th
+    ref={ref}
+    className={cn(
+      "h-12 px-4 text-left align-middle font-medium text-[var(--color-700)] [&:has([role=checkbox])]:pr-0",
+      className
+    )}
+    {...props}
+  />
+));
+TableHead.displayName = "TableHead";
+
+const TableCell = React.forwardRef<
+  HTMLTableCellElement,
+  React.TdHTMLAttributes<HTMLTableCellElement>
+>(({ className, ...props }, ref) => (
+  <td
+    ref={ref}
+    className={cn("p-4 align-middle [&:has([role=checkbox])]:pr-0", className)}
+    {...props}
+  />
+));
+TableCell.displayName = "TableCell";
+
+const TableCaption = React.forwardRef<
+  HTMLTableCaptionElement,
+  React.HTMLAttributes<HTMLTableCaptionElement>
+>(({ className, ...props }, ref) => (
+  <caption
+    ref={ref}
+    className={cn("mt-4 text-sm text-[var(--color-700)]", className)}
+    {...props}
+  />
+));
+TableCaption.displayName = "TableCaption";
+
+export {
+  Table,
+  TableHeader,
+  TableBody,
+  TableFooter,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableCaption,
+};
+    `,
+  },
 ];
 
 export const features = [
   { name: "Design", url: "/" },
   { name: "Accessibility", url: "/accessibility" },
+];
+
+export const invoices = [
+  {
+    invoice: "INV001",
+    paymentStatus: "Paid",
+    totalAmount: "$250.00",
+    paymentMethod: "Credit Card",
+  },
+  {
+    invoice: "INV002",
+    paymentStatus: "Pending",
+    totalAmount: "$150.00",
+    paymentMethod: "PayPal",
+  },
+  {
+    invoice: "INV003",
+    paymentStatus: "Unpaid",
+    totalAmount: "$350.00",
+    paymentMethod: "Bank Transfer",
+  },
+];
+
+export const items: { title: string; href: string; description: string }[] = [
+  {
+    title: "Alert Dialog",
+    href: "/docs/primitives/alert-dialog",
+    description:
+      "A modal dialog that interrupts the user with important content and expects a response.",
+  },
+  {
+    title: "Hover Card",
+    href: "/docs/primitives/hover-card",
+    description:
+      "For sighted users to preview content available behind a link.",
+  },
+  {
+    title: "Progress",
+    href: "/docs/primitives/progress",
+    description:
+      "Displays an indicator showing the completion progress of a task.",
+  },
+  {
+    title: "Scroll-area",
+    href: "/docs/primitives/scroll-area",
+    description: "Visually or semantically separates content.",
+  },
+  {
+    title: "Tabs",
+    href: "/docs/primitives/tabs",
+    description:
+      "A set of layered sections of content—known as tab panels—that are displayed one at a time.",
+  },
+  {
+    title: "Tooltip",
+    href: "/docs/primitives/tooltip",
+    description: "A popup that displays information related to an element.",
+  },
 ];
 
 export const palette = [

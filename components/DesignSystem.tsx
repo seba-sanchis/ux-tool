@@ -2,10 +2,42 @@
 
 import { useState } from "react";
 import CopyButton from "./CopyButton";
-import { components, tabs } from "@/constants";
+import { components, invoices, items, tabs } from "@/constants";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
+import { Input } from "@/components/ui/input";
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuIndicator,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  NavigationMenuViewport,
+  navigationMenuTriggerStyle,
+} from "@/components/ui/navigation-menu";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableFooter,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { Component } from "@/types";
+import Link from "next/link";
 
 type Props = {
   palette: { hex: string; tone: number }[];
@@ -79,6 +111,138 @@ export default function DesignSystem({ palette, isDarkMode }: Props) {
                 onSelect={setDate}
                 className="rounded-md border"
               />
+            ) : activeTab === "Preview" && activeItem === "Input" ? (
+              <Input />
+            ) : activeTab === "Preview" && activeItem === "Navigation Menu" ? (
+              <div className="relative bottom-32">
+                <NavigationMenu>
+                  <NavigationMenuList>
+                    <NavigationMenuItem>
+                      <NavigationMenuTrigger>
+                        Getting started
+                      </NavigationMenuTrigger>
+                      <NavigationMenuContent>
+                        <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
+                          <li className="row-span-3">
+                            <NavigationMenuLink asChild>
+                              <a
+                                className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-[var(--color-200)] to-[var(--color-300)] p-6 no-underline outline-none focus:shadow-md"
+                                href="/"
+                              >
+                                <div className="mb-2 mt-4 text-lg font-medium">
+                                  shadcn/ui
+                                </div>
+                                <p className="text-sm leading-tight text-muted-foreground">
+                                  Beautifully designed components that you can
+                                  copy and paste into your apps. Accessible.
+                                  Customizable. Open Source.
+                                </p>
+                              </a>
+                            </NavigationMenuLink>
+                          </li>
+                          <Link
+                            href="/docs"
+                            title="Introduction"
+                            className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-[var(--color-200)] hover:text-[var(--color-1000)] focus:bg-[var(--color-500)] focus:text-[var(--color-1000)]"
+                          >
+                            Re-usable components built using Radix UI and
+                            Tailwind CSS.
+                          </Link>
+                          <Link
+                            href="/docs/installation"
+                            title="Installation"
+                            className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-[var(--color-200)] hover:text-[var(--color-1000)] focus:bg-[var(--color-500)] focus:text-[var(--color-1000)]"
+                          >
+                            How to install dependencies and structure your app.
+                          </Link>
+                          <Link
+                            href="/docs/primitives/typography"
+                            title="Typography"
+                            className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-[var(--color-200)] hover:text-[var(--color-1000)] focus:bg-[var(--color-500)] focus:text-[var(--color-1000)]"
+                          >
+                            Styles for headings, paragraphs, lists...etc
+                          </Link>
+                        </ul>
+                      </NavigationMenuContent>
+                    </NavigationMenuItem>
+                    <NavigationMenuItem>
+                      <NavigationMenuTrigger>Components</NavigationMenuTrigger>
+                      <NavigationMenuContent>
+                        <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
+                          {items.map((item) => (
+                            <Link
+                              key={item.title}
+                              title={item.title}
+                              href={item.href}
+                              className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-[var(--color-200)] hover:text-[var(--color-1000)] focus:bg-[var(--color-500)] focus:text-[var(--color-1000)]"
+                            >
+                              {item.description}
+                            </Link>
+                          ))}
+                        </ul>
+                      </NavigationMenuContent>
+                    </NavigationMenuItem>
+                    <NavigationMenuItem>
+                      <Link href="/docs" legacyBehavior passHref>
+                        <NavigationMenuLink
+                          className={navigationMenuTriggerStyle()}
+                        >
+                          Documentation
+                        </NavigationMenuLink>
+                      </Link>
+                    </NavigationMenuItem>
+                  </NavigationMenuList>
+                </NavigationMenu>
+              </div>
+            ) : activeTab === "Preview" && activeItem === "Pagination" ? (
+              <Pagination>
+                <PaginationContent>
+                  <PaginationItem>
+                    <PaginationPrevious href="#" />
+                  </PaginationItem>
+                  <PaginationItem>
+                    <PaginationLink href="#">1</PaginationLink>
+                  </PaginationItem>
+                  <PaginationItem>
+                    <PaginationEllipsis />
+                  </PaginationItem>
+                  <PaginationItem>
+                    <PaginationNext href="#" />
+                  </PaginationItem>
+                </PaginationContent>
+              </Pagination>
+            ) : activeTab === "Preview" && activeItem === "Table" ? (
+              <Table>
+                <TableCaption>A list of your recent invoices.</TableCaption>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead className="w-[100px]">Invoice</TableHead>
+                    <TableHead>Status</TableHead>
+                    <TableHead>Method</TableHead>
+                    <TableHead className="text-right">Amount</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {invoices.map((invoice) => (
+                    <TableRow key={invoice.invoice}>
+                      <TableCell className="font-medium">
+                        {invoice.invoice}
+                      </TableCell>
+                      <TableCell>{invoice.paymentStatus}</TableCell>
+                      <TableCell>{invoice.paymentMethod}</TableCell>
+                      <TableCell className="text-right">
+                        {invoice.totalAmount}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+                <TableFooter>
+                  <TableRow>
+                    <TableCell colSpan={3}>Total</TableCell>
+                    <TableCell className="text-right">$2,500.00</TableCell>
+                  </TableRow>
+                </TableFooter>
+              </Table>
             ) : null}
             {activeTab === "Code" && (
               <div className="flex flex-col w-full h-full">
