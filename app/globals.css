@@ -89,7 +89,7 @@ body {
 
 /* Section */
 .section {
-  @apply flex flex-col gap-4 my-10;
+  @apply flex flex-col gap-4 my-12;
 }
 
 .section-title {

@@ -112,7 +112,9 @@ export default function DesignSystem({ palette, isDarkMode }: Props) {
                 className="rounded-md border"
               />
             ) : activeTab === "Preview" && activeItem === "Input" ? (
-              <Input />
+              <div className="max-w-sm">
+                <Input />
+              </div>
             ) : activeTab === "Preview" && activeItem === "Navigation Menu" ? (
               <div className="relative bottom-32">
                 <NavigationMenu>

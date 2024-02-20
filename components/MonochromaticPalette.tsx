@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import tinycolor from "tinycolor2";
 
 import { palette as p } from "@/constants";
+import { FaCheck } from "react-icons/fa";
 
 type Props = {
   color: string;
@@ -21,6 +22,7 @@ export default function MonochromaticPalette({
   useEffect(() => {
     handlePalette();
   }, [color]);
+  const [copiedColor, setCopiedColor] = useState<string | null>(null);
 
   function handlePalette() {
     let convertedColor = tinycolor(color);
@@ -85,6 +87,8 @@ export default function MonochromaticPalette({
 
   const handleCopy = (tone: string) => {
     navigator.clipboard.writeText(tone);
+    setCopiedColor(tone);
+    setTimeout(() => setCopiedColor(null), 1000);
   };
 
   return (
@@ -112,7 +116,10 @@ export default function MonochromaticPalette({
             ></div>
             <div className="flex flex-col items-start whitespace-nowrap">
               <div className="text-sm text-[--gray-1000]">{color.variable}</div>
-              <div className="text-sm text-[--gray-900]">{color.hex}</div>
+              <div className="flex gap-1 items-center text-sm text-[--gray-900]">
+                <span>{color.hex}</span>
+                {copiedColor === color.hex && <FaCheck />}
+              </div>
             </div>
           </button>
         ))}
