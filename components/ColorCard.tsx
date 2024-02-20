@@ -67,7 +67,7 @@ export default function ColorCard({
 
   return (
     <div className="flex flex-col gap-4">
-      <h3 className="text-sm text-[var(--accents-6)]">{name}</h3>
+      <h3 className="text-sm text-[--accents-6]">{name}</h3>
       <div className="input-container">
         <Input
           id="picker"

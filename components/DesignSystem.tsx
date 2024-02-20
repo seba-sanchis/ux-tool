@@ -128,7 +128,7 @@ export default function DesignSystem({ palette, isDarkMode }: Props) {
                           <li className="row-span-3">
                             <NavigationMenuLink asChild>
                               <a
-                                className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-[var(--color-200)] to-[var(--color-300)] p-6 no-underline outline-none focus:shadow-md"
+                                className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-[--color-200] to-[--color-300] p-6 no-underline outline-none focus:shadow-md"
                                 href="/"
                               >
                                 <div className="mb-2 mt-4 text-lg font-medium">
@@ -145,7 +145,7 @@ export default function DesignSystem({ palette, isDarkMode }: Props) {
                           <Link
                             href="/docs"
                             title="Introduction"
-                            className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-[var(--color-200)] hover:text-[var(--color-1000)] focus:bg-[var(--color-500)] focus:text-[var(--color-1000)]"
+                            className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-[--color-200] hover:text-[--color-1000] focus:bg-[--color-500] focus:text-[--color-1000]"
                           >
                             Re-usable components built using Radix UI and
                             Tailwind CSS.
@@ -153,14 +153,14 @@ export default function DesignSystem({ palette, isDarkMode }: Props) {
                           <Link
                             href="/docs/installation"
                             title="Installation"
-                            className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-[var(--color-200)] hover:text-[var(--color-1000)] focus:bg-[var(--color-500)] focus:text-[var(--color-1000)]"
+                            className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-[--color-200] hover:text-[--color-1000] focus:bg-[--color-500] focus:text-[--color-1000]"
                           >
                             How to install dependencies and structure your app.
                           </Link>
                           <Link
                             href="/docs/primitives/typography"
                             title="Typography"
-                            className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-[var(--color-200)] hover:text-[var(--color-1000)] focus:bg-[var(--color-500)] focus:text-[var(--color-1000)]"
+                            className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-[--color-200] hover:text-[--color-1000] focus:bg-[--color-500] focus:text-[--color-1000]"
                           >
                             Styles for headings, paragraphs, lists...etc
                           </Link>
@@ -176,7 +176,7 @@ export default function DesignSystem({ palette, isDarkMode }: Props) {
                               key={item.title}
                               title={item.title}
                               href={item.href}
-                              className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-[var(--color-200)] hover:text-[var(--color-1000)] focus:bg-[var(--color-500)] focus:text-[var(--color-1000)]"
+                              className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-[--color-200] hover:text-[--color-1000] focus:bg-[--color-500] focus:text-[--color-1000]"
                             >
                               {item.description}
                             </Link>

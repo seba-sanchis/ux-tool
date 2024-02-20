@@ -9,12 +9,12 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-[--background] bg-[var(--color-500)] hover:bg-[var(--color-600)] active:bg-[var(--color-700)] disabled:text-[var(--color-700)] disabled:bg-[var(--color-200)]",
+  "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-[--background] bg-[--color-500] hover:bg-[--color-600] active:bg-[--color-700] disabled:text-[--color-700] disabled:bg-[--color-200]",
   {
     variants: {
       variant: {
         default:
-          "text-[--background] bg-[var(--color-500)] hover:bg-[var(--color-600)] active:bg-[var(--color-700)] disabled:text-[var(--color-700)] disabled:bg-[var(--color-200)]",
+          "text-[--background] bg-[--color-500] hover:bg-[--color-600] active:bg-[--color-700] disabled:text-[--color-700] disabled:bg-[--color-200]",
         destructive:
           "bg-destructive text-destructive-foreground hover:bg-destructive/90",
         outline:
@@ -101,11 +101,11 @@ function Calendar({
           "text-muted-foreground rounded-md w-9 font-normal text-[0.8rem]",
         row: "flex w-full mt-2",
         cell: "h-9 w-9 text-center text-sm p-0 relative [&:has([aria-selected].day-range-end)]:rounded-r-md [&:has([aria-selected].day-outside)]:bg-accent/50 [&:has([aria-selected])]:bg-accent first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20",
-        day: "h-9 w-9 p-0 font-normal rounded-lg hover:bg-[var(--color-100)]",
+        day: "h-9 w-9 p-0 font-normal rounded-lg hover:bg-[--color-100]",
         day_range_end: "day-range-end",
         day_selected:
-          "focus:bg-[var(--color-500)] focus:text-[var(--background)]",
-        day_today: "bg-[var(--color-100)] text-accent-foreground",
+          "focus:bg-[--color-500] focus:text-[--background]",
+        day_today: "bg-[--color-100] text-accent-foreground",
         day_outside:
           "day-outside text-muted-foreground opacity-50 aria-selected:bg-accent/50 aria-selected:text-muted-foreground aria-selected:opacity-30",
         day_disabled: "text-muted-foreground opacity-50",
@@ -141,8 +141,8 @@ export { Calendar };
         <input
           type={type}
           className={cn(
-            "flex h-10 w-full rounded-md border bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-500)] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
-            "text-[var(--foreground]",
+            "flex h-10 w-full rounded-md border bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[--color-500] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+            "text-[--foreground]",
             className
           )}
           ref={ref}
@@ -201,7 +201,7 @@ NavigationMenuList.displayName = NavigationMenuPrimitive.List.displayName;
 const NavigationMenuItem = NavigationMenuPrimitive.Item;
 
 const navigationMenuTriggerStyle = cva(
-  "group inline-flex h-10 w-max items-center justify-center rounded-md bg-[var(--background)] px-4 py-2 text-sm font-medium transition-colors hover:bg-[var(--color-600)] hover:text-[var(--color-100)] focus:bg-[var(--color-600)] focus:text-[var(--color-100)] focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-[var(--color-500)] data-[state=open]:bg-[var(--color-500)]"
+  "group inline-flex h-10 w-max items-center justify-center rounded-md bg-[--background] px-4 py-2 text-sm font-medium transition-colors hover:bg-[--color-600] hover:text-[--color-100] focus:bg-[--color-600] focus:text-[--color-100] focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-[--color-500] data-[state=open]:bg-[--color-500]"
 );
 
 const NavigationMenuTrigger = React.forwardRef<
@@ -246,7 +246,7 @@ const NavigationMenuViewport = React.forwardRef<
   <div className={cn("absolute left-0 top-full flex justify-center")}>
     <NavigationMenuPrimitive.Viewport
       className={cn(
-        "origin-top-center relative mt-1.5 h-[var(--radix-navigation-menu-viewport-height)] w-full overflow-hidden rounded-md border bg-[var(--background)] text-popover-foreground shadow-lg data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-90 md:w-[var(--radix-navigation-menu-viewport-width)]",
+        "origin-top-center relative mt-1.5 h-[--radix-navigation-menu-viewport-height] w-full overflow-hidden rounded-md border bg-[--background] text-popover-foreground shadow-lg data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-90 md:w-[--radix-navigation-menu-viewport-width]",
         className
       )}
       ref={ref}
@@ -457,7 +457,7 @@ const TableFooter = React.forwardRef<
   <tfoot
     ref={ref}
     className={cn(
-      "border-t border-[var(--color-700)] bg-[var(--color-100)] font-medium [&>tr]:last:border-b-0",
+      "border-t border-[--color-700] bg-[--color-100] font-medium [&>tr]:last:border-b-0",
       className
     )}
     {...props}
@@ -472,7 +472,7 @@ const TableRow = React.forwardRef<
   <tr
     ref={ref}
     className={cn(
-      "border-b border-[var(--color-500)] transition-colors hover:bg-[var(--color-200)] data-[state=selected]:bg-[var(--color-100)]",
+      "border-b border-[--color-500] transition-colors hover:bg-[--color-200] data-[state=selected]:bg-[--color-100]",
       className
     )}
     {...props}
@@ -487,7 +487,7 @@ const TableHead = React.forwardRef<
   <th
     ref={ref}
     className={cn(
-      "h-12 px-4 text-left align-middle font-medium text-[var(--color-700)] [&:has([role=checkbox])]:pr-0",
+      "h-12 px-4 text-left align-middle font-medium text-[--color-700] [&:has([role=checkbox])]:pr-0",
       className
     )}
     {...props}
@@ -513,7 +513,7 @@ const TableCaption = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <caption
     ref={ref}
-    className={cn("mt-4 text-sm text-[var(--color-700)]", className)}
+    className={cn("mt-4 text-sm text-[--color-700]", className)}
     {...props}
   />
 ));

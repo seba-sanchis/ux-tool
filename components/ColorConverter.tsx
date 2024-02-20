@@ -5,6 +5,7 @@ import tinycolor from "tinycolor2";
 
 import { palette } from "@/constants";
 import Input from "./Input";
+import { FaCode, FaTimes } from "react-icons/fa";
 
 type Props = {
   color: string;
@@ -13,6 +14,7 @@ type Props = {
 
 export default function ColorConverter({ color, setColor }: Props) {
   const [hex, setHex] = useState<string>("#000000");
+  const [toggleAlert, settoggleAlert] = useState<boolean>(false);
   // const [hsl, setHsl] = useState<string>("");
   // const [hsv, setHsv] = useState<string>("");
   // const [rgb, setRgb] = useState<string>("");
@@ -21,7 +23,6 @@ export default function ColorConverter({ color, setColor }: Props) {
   const handleColor = (value: string) => {
     let convertedColor = tinycolor(value);
 
-    console.log(convertedColor)
     const format = convertedColor.getFormat();
 
     if (!format) {
@@ -79,7 +80,24 @@ export default function ColorConverter({ color, setColor }: Props) {
           inputStyle="input"
           type="text"
         />
+
+        <button type="button" className="p-2" onClick={() => settoggleAlert(true)}>
+          <FaCode />
+        </button>
       </div>
+      {toggleAlert && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+          <div className="bg-[--background] p-8 rounded-lg shadow-lg">
+            <p>hi</p>
+            <button
+              onClick={() => settoggleAlert(false)}
+              className="mt-4 px-4 py-2 bg-gray-200 rounded-lg"
+            >
+              <FaTimes />
+            </button>
+          </div>
+        </div>
+      )}
     </form>
   );
 }

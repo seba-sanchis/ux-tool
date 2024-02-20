@@ -10,7 +10,7 @@ export default function Navbar() {
           {features.map((feature) => (
             <li
               key={feature.name}
-              className="text-sm text-[var(--accents-5)] hover:text-[var(--foreground)]"
+              className="text-sm text-[--accents-5] hover:text-[--foreground]"
             >
               <Link href={feature.url}>{feature.name}</Link>
             </li>

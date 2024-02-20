@@ -111,7 +111,7 @@ body {
 }
 
 .input {
-  @apply px-3 py-2 w-full outline-none bg-transparent border-l border-[--accents-2];
+  @apply px-3 py-2 w-full outline-none bg-transparent border-x border-[--accents-2];
 }
 
 .picker-container {
