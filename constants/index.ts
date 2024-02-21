@@ -596,6 +596,8 @@ export const items: { title: string; href: string; description: string }[] = [
   },
 ];
 
+export const options = ["hex"];
+
 export const palette = [
   { tone: "slate-50", hex: "#f8fafc" },
   { tone: "slate-100", hex: "#f1f5f9" },

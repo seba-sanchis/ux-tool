@@ -7,6 +7,7 @@ import MonochromaticPalette from "@/components/MonochromaticPalette";
 import DesignSystem from "@/components/DesignSystem";
 
 export default function Home() {
+  const [toggleAlert, setToggleAlert] = useState<boolean>(false);
   const [color, setColor] = useState<string>("#000000");
   const [palette, setPalette] = useState<
     { hex: string; tone: number; variable: string }[]
@@ -36,12 +37,18 @@ export default function Home() {
 
   return (
     <main className="max-w-screen-xl w-full min-h-full mt-20 mx-auto px-14 overflow-hidden">
-      <ColorConverter color={color} setColor={setColor} />
+      <ColorConverter
+        color={color}
+        setColor={setColor}
+        setToggleAlert={setToggleAlert}
+      />
 
       <MonochromaticPalette
         color={color}
         palette={palette}
         setPalette={setPalette}
+        toggleAlert={toggleAlert}
+        setToggleAlert={setToggleAlert}
       />
 
       <DesignSystem palette={palette} isDarkMode={isDarkMode} />

@@ -247,13 +247,13 @@ export default function DesignSystem({ palette, isDarkMode }: Props) {
               </Table>
             ) : null}
             {activeTab === "Code" && (
-              <div className="flex flex-col w-full h-full">
-                <div className="flex justify-between items-center px-4 py-3 rounded-t-lg border border-[--accents-2] text-sm">
+              <div className="flex flex-col w-full h-full rounded-lg border border-[--accents-2]">
+                <div className="flex justify-between items-center px-4 h-12 border-b border-[--accents-2] text-sm">
                   <span>{component?.path}</span>
                   <CopyButton text={component?.code} />
                 </div>
 
-                <pre className="p-4 overflow-x-auto rounded-b-lg border border-[--accents-2] bg-[--accents-2]">
+                <pre className="p-4 overflow-x-auto bg-[--background]">
                   <code className="flex max-w-lg text-sm">
                     {component?.code}
                   </code>

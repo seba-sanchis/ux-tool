@@ -5,6 +5,7 @@
 @layer base {
   :root {
     --background: #fff;
+    --background-200: var(--accents-1);
     --foreground: #000;
     --hover: #f3f2f2;
 
@@ -37,6 +38,7 @@
     :root {
       --foreground: #fff;
       --background: #000;
+      --background-200: var(--background);
       --hover: #232323;
 
       --accents-1: #111;

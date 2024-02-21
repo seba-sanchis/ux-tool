@@ -3,8 +3,9 @@
 import { useEffect, useState } from "react";
 import tinycolor from "tinycolor2";
 
-import { palette as p } from "@/constants";
-import { FaCheck } from "react-icons/fa";
+import { options, palette as p } from "@/constants";
+import { FaAngleDown, FaCheck } from "react-icons/fa";
+import CopyButton from "./CopyButton";
 
 type Props = {
   color: string;
@@ -12,17 +13,39 @@ type Props = {
   setPalette: React.Dispatch<
     React.SetStateAction<{ hex: string; tone: number; variable: string }[]>
   >;
+  toggleAlert: boolean;
+  setToggleAlert: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export default function MonochromaticPalette({
   color,
   palette,
   setPalette,
+  toggleAlert,
+  setToggleAlert,
 }: Props) {
   useEffect(() => {
     handlePalette();
   }, [color]);
   const [copiedColor, setCopiedColor] = useState<string | null>(null);
+  const [code, setCode] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedOption, setSelectedOption] = useState(options[0]);
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setToggleAlert(false);
+        setIsOpen(false);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
 
   function handlePalette() {
     let convertedColor = tinycolor(color);
@@ -83,6 +106,17 @@ export default function MonochromaticPalette({
     document.documentElement.style.setProperty("--color-1000", palette[9].hex);
 
     setPalette(palette);
+
+    setCode(`--color-100: ${palette[0].hex};
+--color-200: ${palette[0].hex};
+--color-300: ${palette[1].hex};
+--color-400: ${palette[2].hex};
+--color-500: ${palette[3].hex};
+--color-600: ${palette[4].hex};
+--color-700: ${palette[5].hex};
+--color-800: ${palette[6].hex};
+--color-900: ${palette[7].hex};
+--color-1000: ${palette[8].hex};`);
   }
 
   const handleCopy = (tone: string) => {
@@ -91,8 +125,22 @@ export default function MonochromaticPalette({
     setTimeout(() => setCopiedColor(null), 1000);
   };
 
+  const handleOptions = (option: string) => {
+    setSelectedOption(option);
+    setIsOpen(false);
+  };
+
+  function handleToggle(
+    e: React.MouseEvent<HTMLDivElement | HTMLButtonElement, MouseEvent>
+  ) {
+    if (e.currentTarget === e.target) {
+      setToggleAlert(false);
+      setIsOpen(false);
+    }
+  }
+
   return (
-    <form className="section">
+    <section className="section">
       <h2 className="section-title">Monochromatic Palette</h2>
 
       <div className="grid grid-cols-5 gap-6">
@@ -124,6 +172,57 @@ export default function MonochromaticPalette({
           </button>
         ))}
       </div>
-    </form>
+      {toggleAlert && (
+        <div
+          onClick={(e) => handleToggle(e)}
+          className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
+        >
+          <div className="flex flex-col items-end gap-2 bg-[--background] px-6 pt-2 pb-6 w-full max-w-screen-md rounded-lg shadow-lg">
+            <button
+              onClick={(e) => handleToggle(e)}
+              className="px-2 py-1 text-sm rounded-lg border border-[--accents-2] text-[--gray-900] hover:bg-[--gray-200]"
+            >
+              Esc
+            </button>
+            <div className="flex flex-col w-full h-full rounded-lg border border-[--accents-2]">
+              <div className="flex justify-between items-center px-4 h-12 border-b border-[--accents-2] text-sm">
+                <span>app/globals.css</span>
+                <div className="flex gap-2">
+                  <div className="relative">
+                    <button
+                      className="flex items-center gap-2 px-4 h-full text-[--gray-900] hover:bg-[--gray-200] rounded-lg"
+                      onClick={() => setIsOpen(!isOpen)}
+                    >
+                      {selectedOption}
+                      <FaAngleDown />
+                    </button>
+                    {isOpen && (
+                      <ul className="absolute -right-2 px-2 py-2 rounded-lg bg-[--background] shadow-lg">
+                        {options.map((option) => (
+                          <li
+                            key={option}
+                            onClick={() => handleOptions(option)}
+                            className="flex items-center gap-4 px-4 py-1 text-[--gray-900] hover:bg-[--gray-200] rounded cursor-pointer"
+                          >
+                            {selectedOption === option && <FaCheck size={12} />}
+                            {option}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+
+                  <CopyButton text={code} />
+                </div>
+              </div>
+
+              <pre className="p-4 overflow-x-auto bg-[--background]">
+                <code className="flex max-w-lg text-sm">{code}</code>
+              </pre>
+            </div>
+          </div>
+        </div>
+      )}
+    </section>
   );
 }
