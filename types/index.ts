@@ -3,3 +3,8 @@ export interface Component {
   path: string;
   code: string;
 }
+
+export interface Tone {
+  name: string;
+  hex: string;
+}

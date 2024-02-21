@@ -36,7 +36,16 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="max-w-screen-xl w-full min-h-full mt-20 mx-auto px-14 overflow-hidden">
+    <main className="flex flex-col items-center gap-2 max-w-screen-xl w-full min-h-full mt-20 mx-auto px-14 overflow-hidden">
+      <h1 className="title">Make your color</h1>
+      <p className="subtitle">
+        Enter any type of{" "}
+        <strong className="text-[--accents-8] font-normal">
+          CSS or Tailwind CSS
+        </strong>{" "}
+        color to create a custom color palette.
+      </p>
+
       <ColorConverter
         color={color}
         setColor={setColor}

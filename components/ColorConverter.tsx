@@ -57,15 +57,6 @@ export default function ColorConverter({
 
   return (
     <form className="flex flex-col items-center gap-2">
-      <h1 className="title">Make your color</h1>
-      <p className="subtitle">
-        Enter any type of{" "}
-        <strong className="text-[--accents-8] font-normal">
-          CSS or Tailwind CSS
-        </strong>{" "}
-        color to create a custom color palette.
-      </p>
-
       <div className="input-container mt-2">
         <Input
           id="picker"
