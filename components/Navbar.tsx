@@ -26,7 +26,7 @@ export default function Navbar({ menu }: Props) {
   return (
     <>
       <nav className="flex justify-center sticky top-0 bg-[hsla(0,0%,100%,.8)] dark:bg-[rgba(0,0,0,.8)] shadow-[inset_0_-1px_0_0_var(--accents-2)] saturate-200 backdrop-blur-sm z-50">
-        <div className="flex items-center gap-8 max-w-screen-xl w-full h-16 px-14">
+        <div className="flex items-center gap-8 max-w-screen-lg w-full h-16 px-4 xl:px-0">
           <div>UX Tools</div>
           <ul className="flex gap-4 flex-1">
             {features.map((feature) => (

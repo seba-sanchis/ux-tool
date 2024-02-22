@@ -4,6 +4,11 @@ export interface Component {
   code: string;
 }
 
+export interface Palette {
+  hex: string;
+  tone: string;
+}
+
 export interface Tone {
   name: string;
   hex: string;

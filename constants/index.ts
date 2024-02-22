@@ -598,7 +598,7 @@ export const items: { title: string; href: string; description: string }[] = [
 
 export const options = ["hex"];
 
-export const palette = [
+export const tailwindPalette = [
   { tone: "slate-50", hex: "#f8fafc" },
   { tone: "slate-100", hex: "#f1f5f9" },
   { tone: "slate-200", hex: "#e2e8f0" },

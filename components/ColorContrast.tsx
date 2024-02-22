@@ -23,7 +23,7 @@ export default function ColorContrast() {
   };
 
   return (
-    <form className="section">
+    <section className="section">
       <h2 className="section-title">Color Contrast</h2>
 
       <div className="items-center rounded-lg border border-[--accents-2]">
@@ -154,12 +154,12 @@ export default function ColorContrast() {
             </div>
           </div>
 
-          <div className="flex flex-col md:flex-row justify-center gap-6 w-fit">
+          <form className="flex flex-col md:flex-row justify-center gap-6 w-fit">
             <ColorCard name="Foreground" setForeground={setForeground} />
             <ColorCard name="Background" setBackground={setBackground} />
-          </div>
+          </form>
         </div>
       </div>
-    </form>
+    </section>
   );
 }
