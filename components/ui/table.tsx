@@ -19,7 +19,11 @@ const TableHeader = React.forwardRef<
   HTMLTableSectionElement,
   React.HTMLAttributes<HTMLTableSectionElement>
 >(({ className, ...props }, ref) => (
-  <thead ref={ref} className={cn("[&_tr]:border-b", className)} {...props} />
+  <thead
+    ref={ref}
+    className={cn("border-b dark:border-[--color-500]", className)}
+    {...props}
+  />
 ));
 TableHeader.displayName = "TableHeader";
 
@@ -29,7 +33,7 @@ const TableBody = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <tbody
     ref={ref}
-    className={cn("[&_tr:last-child]:border-0", className)}
+    className={cn("dark:border-[--color-500]", className)}
     {...props}
   />
 ));
@@ -42,7 +46,7 @@ const TableFooter = React.forwardRef<
   <tfoot
     ref={ref}
     className={cn(
-      "border-t border-[--color-700] bg-[--color-100] font-medium [&>tr]:last:border-b-0",
+      "border-t border-[--color-700] bg-[--color-100] font-medium dark:bg-[--color-900] dark:border-[--color-800] dark:text-[--color-100]",
       className
     )}
     {...props}
@@ -57,7 +61,7 @@ const TableRow = React.forwardRef<
   <tr
     ref={ref}
     className={cn(
-      "border-b border-[--color-500] transition-colors hover:bg-[--color-200] data-[state=selected]:bg-[--color-100]",
+      "border-b border-[--color-500] transition-colors hover:bg-[--color-200] data-[state=selected]:bg-[--color-100] dark:border-[--color-600] dark:hover:bg-[--color-600] dark:data-[state=selected]:bg-[--color-800]",
       className
     )}
     {...props}
@@ -72,7 +76,7 @@ const TableHead = React.forwardRef<
   <th
     ref={ref}
     className={cn(
-      "h-12 px-4 text-left align-middle font-medium text-[--color-700] [&:has([role=checkbox])]:pr-0",
+      "h-12 px-4 text-left align-middle font-medium text-[--color-700] dark:text-[--color-100] [&:has([role=checkbox])]:pr-0",
       className
     )}
     {...props}
@@ -98,7 +102,10 @@ const TableCaption = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <caption
     ref={ref}
-    className={cn("mt-4 text-sm text-[--color-700]", className)}
+    className={cn(
+      "mt-4 text-sm text-[--color-700] dark:text-[--color-100]",
+      className
+    )}
     {...props}
   />
 ));

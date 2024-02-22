@@ -5,12 +5,12 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-[--background] bg-[--color-500] hover:bg-[--color-600] active:bg-[--color-700] disabled:text-[--color-700] disabled:bg-[--color-200]",
+  "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-[--background] bg-[--color-500] hover:bg-[--color-600] active:bg-[--color-700] disabled:text-[--color-700] disabled:bg-[--color-200] dark:bg-[--color-800] dark:text-[--color-100] dark:hover:bg-[--color-700] dark:active:bg-[--color-600] dark:disabled:text-[--color-300] dark:disabled:bg-[--color-600]",
   {
     variants: {
       variant: {
         default:
-          "text-[--background] bg-[--color-500] hover:bg-[--color-600] active:bg-[--color-700] disabled:text-[--color-700] disabled:bg-[--color-200]",
+          "text-[--background] bg-[--color-500] hover:bg-[--color-600] active:bg-[--color-700] disabled:text-[--color-700] disabled:bg-[--color-200] dark:bg-[--color-800] dark:text-[--color-100] dark:hover:bg-[--color-700] dark:active:bg-[--color-600] dark:disabled:text-[--color-300] dark:disabled:bg-[--color-600]",
         destructive:
           "bg-destructive text-destructive-foreground hover:bg-destructive/90",
         outline:
@@ -45,7 +45,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     const Comp = asChild ? Slot : "button";
     return (
       <Comp
-        className={cn(buttonVariants({ variant, size, className }))}
+        className={cn(`dark:${buttonVariants({ variant, size, className })}`)}
         ref={ref}
         {...props}
       />

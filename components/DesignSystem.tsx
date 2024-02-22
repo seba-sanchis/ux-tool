@@ -128,8 +128,8 @@ export default function DesignSystem({ palette, isDarkMode }: Props) {
                           <li className="row-span-3">
                             <NavigationMenuLink asChild>
                               <a
-                                className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-[--color-200] to-[--color-300] p-6 no-underline outline-none focus:shadow-md"
-                                href="/"
+                                className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-[--color-200] to-[--color-300] dark:from-[--color-900] dark:to-[--color-800] p-6 no-underline outline-none focus:shadow-md"
+                                href="#"
                               >
                                 <div className="mb-2 mt-4 text-lg font-medium">
                                   shadcn/ui
@@ -143,24 +143,24 @@ export default function DesignSystem({ palette, isDarkMode }: Props) {
                             </NavigationMenuLink>
                           </li>
                           <Link
-                            href="/docs"
+                            href="#"
                             title="Introduction"
-                            className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-[--color-200] hover:text-[--color-1000] focus:bg-[--color-500] focus:text-[--color-1000]"
+                            className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-[--color-200] dark:hover:bg-[--color-800] hover:text-[--color-1000] dark:hover:text-[--color-100] focus:bg-[--color-500] focus:text-[--color-1000]"
                           >
                             Re-usable components built using Radix UI and
                             Tailwind CSS.
                           </Link>
                           <Link
-                            href="/docs/installation"
+                            href="#"
                             title="Installation"
-                            className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-[--color-200] hover:text-[--color-1000] focus:bg-[--color-500] focus:text-[--color-1000]"
+                            className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-[--color-200] dark:hover:bg-[--color-800] dark:hover:text-[--color-100] focus:bg-[--color-500] focus:text-[--color-1000]"
                           >
                             How to install dependencies and structure your app.
                           </Link>
                           <Link
-                            href="/docs/primitives/typography"
+                            href="#"
                             title="Typography"
-                            className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-[--color-200] hover:text-[--color-1000] focus:bg-[--color-500] focus:text-[--color-1000]"
+                            className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-[--color-200] dark:hover:bg-[--color-800] dark:hover:text-[--color-100] focus:bg-[--color-500] focus:text-[--color-1000]"
                           >
                             Styles for headings, paragraphs, lists...etc
                           </Link>
@@ -176,7 +176,7 @@ export default function DesignSystem({ palette, isDarkMode }: Props) {
                               key={item.title}
                               title={item.title}
                               href={item.href}
-                              className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-[--color-200] hover:text-[--color-1000] focus:bg-[--color-500] focus:text-[--color-1000]"
+                              className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-[--color-200] dark:hover:bg-[--color-800] dark:hover:text-[--color-100] focus:bg-[--color-500] focus:text-[--color-1000]"
                             >
                               {item.description}
                             </Link>
@@ -185,7 +185,7 @@ export default function DesignSystem({ palette, isDarkMode }: Props) {
                       </NavigationMenuContent>
                     </NavigationMenuItem>
                     <NavigationMenuItem>
-                      <Link href="/docs" legacyBehavior passHref>
+                      <Link href="#" legacyBehavior passHref>
                         <NavigationMenuLink
                           className={navigationMenuTriggerStyle()}
                         >
