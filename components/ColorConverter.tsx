@@ -6,18 +6,13 @@ import tinycolor from "tinycolor2";
 import { palette } from "@/constants";
 import Input from "./Input";
 import { FaCode } from "react-icons/fa";
+import { addCookie } from "@/lib/actions";
 
 type Props = {
-  color: string;
-  setColor: React.Dispatch<React.SetStateAction<string>>;
-  setToggleAlert: React.Dispatch<React.SetStateAction<boolean>>;
+  color: string | undefined;
 };
 
-export default function ColorConverter({
-  color,
-  setColor,
-  setToggleAlert,
-}: Props) {
+export default function ColorConverter({ color }: Props) {
   const [hex, setHex] = useState<string>("#000000");
   // const [hsl, setHsl] = useState<string>("");
   // const [hsv, setHsv] = useState<string>("");
@@ -40,7 +35,7 @@ export default function ColorConverter({
     // const hsv = color.toHsvString();
     // const rgb = color.toRgbString();
 
-    setColor(value);
+    addCookie("color", value);
     setHex(hex);
     // setHsl(hsl);
     // setHsv(hsv);
@@ -54,6 +49,10 @@ export default function ColorConverter({
     //   setTailwind("");
     // }
   };
+
+  function handleAlert(value: string) {
+    addCookie("alert", value);
+  }
 
   return (
     <form className="flex flex-col items-center gap-2">
@@ -79,7 +78,7 @@ export default function ColorConverter({
         <button
           type="button"
           className="p-2"
-          onClick={() => setToggleAlert(true)}
+          onClick={() => handleAlert("true")}
         >
           <FaCode />
         </button>

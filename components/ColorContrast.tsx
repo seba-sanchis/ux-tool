@@ -31,8 +31,8 @@ export default function ColorContrast() {
           style={{ color: foreground, backgroundColor: background }}
           className="flex flex-col justify-center items-center gap-4 flex-1 p-6 rounded-t-lg"
         >
-          <div className="text-3xl">How does it work?</div>
-          <p>
+          <div className="text-2xl md:text-3xl">How does it work?</div>
+          <p className="text-sm md:text-base">
             This tool follows the Web Content Accessibility Guidelines (WCAG),
             which are a series of recommendations for making the web more
             accessible. Regarding colors, the standard defines two levels of
@@ -92,7 +92,7 @@ export default function ColorContrast() {
               </div>
             </div>
 
-            <div className="flex gap-6">
+            <div className="hidden md:flex gap-6">
               <div
                 className={`flex items-center flex-1 gap-4 ${
                   contrastRatio >= 7
@@ -154,7 +154,7 @@ export default function ColorContrast() {
             </div>
           </div>
 
-          <div className="flex justify-center gap-6 w-fit">
+          <div className="flex flex-col md:flex-row justify-center gap-6 w-fit">
             <ColorCard name="Foreground" setForeground={setForeground} />
             <ColorCard name="Background" setBackground={setBackground} />
           </div>

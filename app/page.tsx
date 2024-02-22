@@ -1,39 +1,14 @@
-"use client";
-
-import { useEffect, useState } from "react";
-
 import ColorConverter from "@/components/ColorConverter";
 import MonochromaticPalette from "@/components/MonochromaticPalette";
 import DesignSystem from "@/components/DesignSystem";
+import { getCookie } from "@/lib/actions";
 
-export default function Home() {
-  const [toggleAlert, setToggleAlert] = useState<boolean>(false);
-  const [color, setColor] = useState<string>("#000000");
-  const [palette, setPalette] = useState<
-    { hex: string; tone: number; variable: string }[]
-  >([]);
-  const [isDarkMode, setIsDarkMode] = useState(false);
+export default async function Home() {
+  const alert = await getCookie("alert");
 
-  useEffect(() => {
-    const checkDarkMode = () => {
-      const isDark =
-        window.matchMedia &&
-        window.matchMedia("(prefers-color-scheme: dark)").matches;
-      setIsDarkMode(isDark);
-    };
+  const color = await getCookie("color");
 
-    // Run the check initially
-    checkDarkMode();
-
-    // Subscribe to changes in the dark mode preference
-    const mediaQueryList = window.matchMedia("(prefers-color-scheme: dark)");
-    mediaQueryList.addEventListener("change", checkDarkMode);
-
-    // Cleanup the event listener on component unmount
-    return () => {
-      mediaQueryList.removeEventListener("change", checkDarkMode);
-    };
-  }, []);
+  const component = await getCookie("component");
 
   return (
     <main className="flex flex-col items-center gap-2 max-w-screen-xl w-full min-h-full mt-20 mx-auto px-14 overflow-hidden">
@@ -46,21 +21,11 @@ export default function Home() {
         color to create a custom color palette.
       </p>
 
-      <ColorConverter
-        color={color}
-        setColor={setColor}
-        setToggleAlert={setToggleAlert}
-      />
+      <ColorConverter color={color?.value} />
 
-      <MonochromaticPalette
-        color={color}
-        palette={palette}
-        setPalette={setPalette}
-        toggleAlert={toggleAlert}
-        setToggleAlert={setToggleAlert}
-      />
+      <MonochromaticPalette alert={alert?.value} color={color?.value} />
 
-      <DesignSystem palette={palette} isDarkMode={isDarkMode} />
+      <DesignSystem component={component?.value} />
     </main>
   );
 }

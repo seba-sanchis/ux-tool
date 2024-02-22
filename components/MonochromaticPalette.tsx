@@ -6,24 +6,14 @@ import tinycolor from "tinycolor2";
 import { options, palette as p } from "@/constants";
 import { FaAngleDown, FaCheck } from "react-icons/fa";
 import CopyButton from "./CopyButton";
+import { addCookie } from "@/lib/actions";
 
 type Props = {
-  color: string;
-  palette: { hex: string; tone: number; variable: string }[];
-  setPalette: React.Dispatch<
-    React.SetStateAction<{ hex: string; tone: number; variable: string }[]>
-  >;
-  toggleAlert: boolean;
-  setToggleAlert: React.Dispatch<React.SetStateAction<boolean>>;
+  alert: string | undefined;
+  color: string | undefined;
 };
 
-export default function MonochromaticPalette({
-  color,
-  palette,
-  setPalette,
-  toggleAlert,
-  setToggleAlert,
-}: Props) {
+export default function MonochromaticPalette({ alert, color }: Props) {
   useEffect(() => {
     handlePalette();
   }, [color]);
@@ -31,11 +21,14 @@ export default function MonochromaticPalette({
   const [code, setCode] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState(options[0]);
+  const [palette, setPalette] = useState<
+    { hex: string; tone: number; variable: string }[]
+  >([]);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
-        setToggleAlert(false);
+        addCookie("alert", "false");
         setIsOpen(false);
       }
     };
@@ -134,7 +127,7 @@ export default function MonochromaticPalette({
     e: React.MouseEvent<HTMLDivElement | HTMLButtonElement, MouseEvent>
   ) {
     if (e.currentTarget === e.target) {
-      setToggleAlert(false);
+      addCookie("alert", "false");
       setIsOpen(false);
     }
   }
@@ -143,7 +136,7 @@ export default function MonochromaticPalette({
     <section className="section">
       <h2 className="section-title">Monochromatic Palette</h2>
 
-      <div className="grid grid-cols-5 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
         {palette?.map((color) => (
           <button
             key={color.tone}
@@ -172,7 +165,7 @@ export default function MonochromaticPalette({
           </button>
         ))}
       </div>
-      {toggleAlert && (
+      {alert === "true" && (
         <div
           onClick={(e) => handleToggle(e)}
           className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"

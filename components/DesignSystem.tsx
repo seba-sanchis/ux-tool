@@ -36,29 +36,28 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Component } from "@/types";
 import Link from "next/link";
+import { addCookie } from "@/lib/actions";
+import { Component } from "@/types";
 
 type Props = {
-  palette: { hex: string; tone: number }[];
-  isDarkMode: boolean;
+  component: string | undefined;
 };
 
-export default function DesignSystem({ palette, isDarkMode }: Props) {
-  const [activeItem, setActiveItem] = useState("Button");
+export default function DesignSystem({ component }: Props) {
   const [activeTab, setActiveTab] = useState("Preview");
   const [date, setDate] = useState<Date | undefined>(new Date());
-
-  const handleItem = (item: string) => {
-    setActiveItem(item);
-  };
 
   const handleTab = (tab: string) => {
     setActiveTab(tab);
   };
 
-  const component: Component | undefined = components.find(
-    (component) => component.name === activeItem
+  function handleComponent(value: string) {
+    addCookie("component", value);
+  }
+
+  const componentFound: Component | undefined = components.find(
+    (c) => c.name === component
   );
 
   return (
@@ -66,16 +65,16 @@ export default function DesignSystem({ palette, isDarkMode }: Props) {
       <h2 className="section-title">Design System</h2>
 
       <div className="flex gap-4">
-        <ul className="-ml-4 flex flex-col gap-2 w-64">
+        <ul className="hidden md:flex flex-col gap-2 w-64 -ml-4">
           {components.map((item) => (
             <li
               key={item.name}
               className={`text-[--accents-6] px-4 py-2 rounded-lg cursor-pointer whitespace-nowrap ${
-                activeItem === item.name
+                component === item.name
                   ? "text-[--foreground] bg-[--hover]"
                   : "hover:text-[--foreground] hover:bg-[--accents-1]"
               }`}
-              onClick={() => handleItem(item.name)}
+              onClick={() => handleComponent(item.name)}
             >
               {item.name}
             </li>
@@ -84,7 +83,7 @@ export default function DesignSystem({ palette, isDarkMode }: Props) {
 
         <div className="flex flex-col w-full">
           <div className="flex items-center justify-between pb-3">
-            <div className="inline-flex items-center w-full border-b border-[--accents-2] bg-transparent">
+            <div className="flex items-center w-full border-b border-[--accents-2] bg-transparent">
               {tabs.map((tab) => (
                 <button
                   key={tab.name}
@@ -102,20 +101,20 @@ export default function DesignSystem({ palette, isDarkMode }: Props) {
             </div>
           </div>
           <div className="flex justify-center items-center p-10 w-full h-96 mt-2 rounded-lg border border-[--accents-2]">
-            {activeTab === "Preview" && activeItem === "Button" ? (
-              <Button>{component?.name}</Button>
-            ) : activeTab === "Preview" && activeItem === "Calendar" ? (
+            {activeTab === "Preview" && component === "Button" ? (
+              <Button>{component}</Button>
+            ) : activeTab === "Preview" && component === "Calendar" ? (
               <Calendar
                 mode="single"
                 selected={date}
                 onSelect={setDate}
                 className="rounded-md border"
               />
-            ) : activeTab === "Preview" && activeItem === "Input" ? (
+            ) : activeTab === "Preview" && component === "Input" ? (
               <div className="max-w-sm">
                 <Input />
               </div>
-            ) : activeTab === "Preview" && activeItem === "Navigation Menu" ? (
+            ) : activeTab === "Preview" && component === "Navigation Menu" ? (
               <div className="relative bottom-32">
                 <NavigationMenu>
                   <NavigationMenuList>
@@ -196,7 +195,7 @@ export default function DesignSystem({ palette, isDarkMode }: Props) {
                   </NavigationMenuList>
                 </NavigationMenu>
               </div>
-            ) : activeTab === "Preview" && activeItem === "Pagination" ? (
+            ) : activeTab === "Preview" && component === "Pagination" ? (
               <Pagination>
                 <PaginationContent>
                   <PaginationItem>
@@ -213,7 +212,7 @@ export default function DesignSystem({ palette, isDarkMode }: Props) {
                   </PaginationItem>
                 </PaginationContent>
               </Pagination>
-            ) : activeTab === "Preview" && activeItem === "Table" ? (
+            ) : activeTab === "Preview" && component === "Table" ? (
               <Table>
                 <TableCaption>A list of your recent invoices.</TableCaption>
                 <TableHeader>
@@ -249,13 +248,13 @@ export default function DesignSystem({ palette, isDarkMode }: Props) {
             {activeTab === "Code" && (
               <div className="flex flex-col w-full h-full rounded-lg border border-[--accents-2]">
                 <div className="flex justify-between items-center px-4 h-12 border-b border-[--accents-2] text-sm">
-                  <span>{component?.path}</span>
-                  <CopyButton text={component?.code} />
+                  <span>{componentFound?.path}</span>
+                  <CopyButton text={componentFound?.code} />
                 </div>
 
                 <pre className="p-4 overflow-x-auto bg-[--background]">
                   <code className="flex max-w-lg text-sm">
-                    {component?.code}
+                    {componentFound?.code}
                   </code>
                 </pre>
               </div>

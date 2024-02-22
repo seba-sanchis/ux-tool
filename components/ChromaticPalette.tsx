@@ -83,7 +83,7 @@ export default function ChromaticPalette() {
       {palette?.map((palette) => (
         <div className="flex flex-col gap-4 my-4">
           <h3 className="section-subtitle">{palette.name}</h3>
-          <div className="grid grid-cols-5 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
             {palette.tones.map((color) => (
               <button
                 key={color.tone}
