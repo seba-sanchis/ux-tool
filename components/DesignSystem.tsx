@@ -56,7 +56,7 @@ export default function DesignSystem({ component }: Props) {
     addCookie("component", value);
   }
 
-  const componentFound: Component | undefined = components.find(
+  const foundComponent: Component | undefined = components.find(
     (c) => c.name === component
   );
 
@@ -248,13 +248,13 @@ export default function DesignSystem({ component }: Props) {
             {activeTab === "Code" && (
               <div className="flex flex-col w-full h-full rounded-lg border border-[--accents-2]">
                 <div className="flex justify-between items-center px-4 h-12 border-b border-[--accents-2] text-sm">
-                  <span>{componentFound?.path}</span>
-                  <CopyButton text={componentFound?.code} />
+                  <span>{foundComponent?.path}</span>
+                  <CopyButton text={foundComponent?.code} />
                 </div>
 
                 <pre className="p-4 overflow-x-auto bg-[--background]">
                   <code className="flex max-w-lg text-sm">
-                    {componentFound?.code}
+                    {foundComponent?.code}
                   </code>
                 </pre>
               </div>
