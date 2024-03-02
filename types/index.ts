@@ -6,6 +6,9 @@ export interface Component {
 
 export interface Palette {
   hex: string;
+  hsl: string;
+  rgb: string;
+  oklch: string;
   tone: string;
 }
 

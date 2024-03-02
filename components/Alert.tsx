@@ -7,14 +7,14 @@ import { options } from "@/constants";
 import CopyButton from "./CopyButton";
 
 type Props = {
-  code: { hex: string; oklch: string };
+  code: { base: string; hex: string; hsl: string; oklch: string; rgb: string };
   setToggleAlert: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export default function Alert({ code, setToggleAlert }: Props) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [selectedOption, setSelectedOption] =
-    useState<keyof Props["code"]>("hex");
+    useState<keyof Props["code"]>("base");
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {

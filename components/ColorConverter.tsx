@@ -13,7 +13,7 @@ import { convertToOklch } from "@/lib/actions/color.actions";
 
 export default function ColorConverter() {
   const [color, setColor] = useState<string>("#000000");
-  const [code, setCode] = useState({ hex: "", oklch: "" });
+  const [code, setCode] = useState({ base: "", hex: "", hsl: "", oklch: "", rgb: "" });
   const [hex, setHex] = useState<string>("#000000");
   const [palette, setPalette] = useState<Palette[]>([]);
   const [toggleAlert, setToggleAlert] = useState(false);
@@ -22,7 +22,6 @@ export default function ColorConverter() {
     handlePalette(color);
   }, []);
 
-  // Constants defining the number of colors in the palette and the maximum lightness value
   const NUM_COLORS = 10; // Number of colors in the palette
   const MAX_LIGHTNESS = 90; // Maximum lightness value for generating colors
 
@@ -38,42 +37,33 @@ export default function ColorConverter() {
       convertedColor = tinycolor(tailwindToHex);
     }
 
-    // Get hex value of the color
-    const hex = convertedColor.toHexString();
-
     // Generate the palette
-    const hexPalette = generateHexPalette(convertedColor);
+    const palette = generatePalette(convertedColor);
 
     // Generate CSS variables with the generated palette
-    generateHexCss(hexPalette);
+    generateCss(palette);
 
-    // Generate CSS code string representing the hex palette
-    const hexCss =
-      `--color-base: ${hex};\n\n` +
-      hexPalette
-        .map((color, index) => `--color-${100 + index * 100}: ${color.hex};`)
-        .join("\n");
+    const baseCode = generateBaseCssCode(convertedColor);
 
-    // Generate CSS code string representing the oklch palette
-    const oklchCss =
-      `--color-base: ${convertToOklch(hex)};\n\n` +
-      hexPalette
-        .map(
-          (color, index) =>
-            `--color-${100 + index * 100}: ${convertToOklch(color.hex)};`
-        )
-        .join("\n");
+    // Generate CSS code strings representing the palettes
+    const cssCode = generateCssCode(palette);
 
     // Update React state with the selected color, hex value, palette, and code string
     setColor(value);
-    setHex(hex);
-    setPalette(hexPalette);
-    setCode({ hex: hexCss, oklch: oklchCss });
+    setHex(convertedColor.toHexString());
+    setPalette(palette);
+    setCode({
+      base: baseCode,
+      hex: cssCode.hex,
+      hsl: cssCode.hsl,
+      oklch: cssCode.oklch,
+      rgb: cssCode.rgb,
+    });
   }
 
-  // Function to generate an array of hex colors for the palette
-  function generateHexPalette(convertedColor: tinycolor.Instance) {
-    const hexPalette = [];
+  // Function to generate an array of colors for the palette
+  function generatePalette(convertedColor: tinycolor.Instance) {
+    const palette = [];
 
     // Get HSL values of the color
     const hsl = convertedColor.toHsl();
@@ -86,21 +76,50 @@ export default function ColorConverter() {
     // Generate colors with varying lightness
     for (let i = 0; i < NUM_COLORS; i++) {
       const lightness = MAX_LIGHTNESS - i * step;
-      const color = tinycolor(
-        `hsl(${hue}, ${saturation}, ${lightness}%)`
-      ).toHexString();
-      hexPalette.push({ hex: color, tone: `var(--color-${100 + i * 100})` });
+      const color = tinycolor(`hsl(${hue}, ${saturation}, ${lightness}%)`);
+
+      const hex = color.toHexString();
+      const rgb = color.toRgbString();
+      const hsl = color.toHslString();
+      const oklch = convertToOklch(hex);
+
+      palette.push({
+        hex,
+        rgb,
+        hsl,
+        oklch,
+        tone: `var(--color-${100 + i * 100})`,
+      });
     }
 
-    return hexPalette;
+    return palette;
   }
 
-  // generate CSS variables based on the generated palette
-  function generateHexCss(hexPalette: Palette[]) {
-    hexPalette.forEach((color, index) => {
+  // Generate CSS variables based on the generated palette
+  function generateCss(palette: Palette[]) {
+    palette.forEach((color, index) => {
       const propertyName = `--color-${100 + index * 100}`;
       document.documentElement.style.setProperty(propertyName, color.hex);
     });
+  }
+
+  // Generate CSS code strings for each color format
+  function generateCssCode(palette: Palette[]) {
+    const cssCode = { hex: "", hsl: "", oklch: "", rgb: "" };
+    // Generate CSS code strings for each color format
+    palette?.forEach((color, index) => {
+      cssCode.hex += `--color-${100 + index * 100}: ${color.hex};\n`;
+      cssCode.hsl += `--color-${100 + index * 100}: ${color.hsl};\n`;
+      cssCode.oklch += `--color-${100 + index * 100}: ${color.oklch};\n`;
+      cssCode.rgb += `--color-${100 + index * 100}: ${color.rgb};\n`;
+    });
+
+    return cssCode;
+  }
+
+  // Generate CSS code string for the base color
+  function generateBaseCssCode(convertedColor: tinycolor.Instance) {
+    return `--color-hex: ${convertedColor.toHexString()};\n--color-hsl: ${convertedColor.toHslString()};\n--color-oklch: ${convertToOklch(convertedColor.toHexString())};\n--color-rgb: ${convertedColor.toRgbString()};\n`;
   }
 
   return (
