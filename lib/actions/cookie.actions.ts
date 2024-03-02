@@ -12,10 +12,3 @@ export async function getCookie(name: string) {
 
   return data;
 }
-
-export async function getCookies() {
-  const cookieStore = cookies();
-  const data = cookieStore.getAll();
-
-  return data;
-}

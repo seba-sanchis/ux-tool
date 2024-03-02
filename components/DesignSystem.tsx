@@ -37,7 +37,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import Link from "next/link";
-import { addCookie } from "@/lib/actions";
+import { addCookie } from "@/lib/actions/cookie.actions";
 import { Component } from "@/types";
 
 type Props = {

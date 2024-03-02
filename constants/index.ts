@@ -596,7 +596,7 @@ export const items: { title: string; href: string; description: string }[] = [
   },
 ];
 
-export const options = ["hex"];
+export const options = ["hex", "oklch"];
 
 export const tailwindPalette = [
   { tone: "slate-50", hex: "#f8fafc" },

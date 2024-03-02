@@ -2,162 +2,105 @@
 
 import { useEffect, useState } from "react";
 import tinycolor from "tinycolor2";
+import { FaCode } from "react-icons/fa";
 
-import { options, tailwindPalette } from "@/constants";
-import { FaAngleDown, FaCheck, FaCode } from "react-icons/fa";
-import CopyButton from "./CopyButton";
-import { addCookie } from "@/lib/actions";
-import Input from "./Input";
+import { tailwindPalette } from "@/constants";
 import { Palette } from "@/types";
 import MonochromaticPalette from "./MonochromaticPalette";
+import Input from "./Input";
+import Alert from "./Alert";
+import { convertToOklch } from "@/lib/actions/color.actions";
 
 export default function ColorConverter() {
   const [color, setColor] = useState<string>("#000000");
-  const [code, setCode] = useState<string>("");
+  const [code, setCode] = useState({ hex: "", oklch: "" });
   const [hex, setHex] = useState<string>("#000000");
-  const [isOpen, setIsOpen] = useState<boolean>(false);
   const [palette, setPalette] = useState<Palette[]>([]);
-  const [selectedOption, setSelectedOption] = useState(options[0]);
   const [toggleAlert, setToggleAlert] = useState(false);
 
   useEffect(() => {
     handlePalette(color);
   }, []);
 
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        addCookie("alert", "false");
-        setIsOpen(false);
-      }
-    };
+  // Constants defining the number of colors in the palette and the maximum lightness value
+  const NUM_COLORS = 10; // Number of colors in the palette
+  const MAX_LIGHTNESS = 90; // Maximum lightness value for generating colors
 
-    window.addEventListener("keydown", handleKeyDown);
-
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-    };
-  }, []);
-
+  // Function to handle palette updates
   function handlePalette(value: string) {
+    // Convert the color value to a tinycolor object
     let convertedColor = tinycolor(value);
 
+    // Check if the color format is supported, if not, try to find a match in the tailwindPalette
     const format = convertedColor.getFormat();
-
     if (!format) {
       const tailwindToHex = tailwindPalette.find((c) => c.tone === value)?.hex;
-
       convertedColor = tinycolor(tailwindToHex);
     }
 
+    // Get hex value of the color
     const hex = convertedColor.toHexString();
 
-    const hsl = convertedColor.toHsl();
+    // Generate the palette
+    const hexPalette = generateHexPalette(convertedColor);
 
-    const hue = hsl.h;
+    // Generate CSS variables with the generated palette
+    generateHexCss(hexPalette);
 
-    const saturation = hsl.s;
+    // Generate CSS code string representing the hex palette
+    const hexCss =
+      `--color-base: ${hex};\n\n` +
+      hexPalette
+        .map((color, index) => `--color-${100 + index * 100}: ${color.hex};`)
+        .join("\n");
 
-    const step = 80 / 9; // Calculate the step size for 10 colors
+    // Generate CSS code string representing the oklch palette
+    const oklchCss =
+      `--color-base: ${convertToOklch(hex)};\n\n` +
+      hexPalette
+        .map(
+          (color, index) =>
+            `--color-${100 + index * 100}: ${convertToOklch(color.hex)};`
+        )
+        .join("\n");
 
-    const hslPalette = [];
-
-    for (let i = 0; i < 10; i++) {
-      const lightness = 90 - i * step; // Calculate the lightness value
-      hslPalette.push(`hsl(${hue}, ${saturation}, ${lightness}%)`);
-    }
-
-    const hexPalette = hslPalette.map((color, index) => {
-      const value = tinycolor(color).toHexString();
-
-      return {
-        hex: value,
-        tone: [
-          "var(--color-100)",
-          "var(--color-200)",
-          "var(--color-300)",
-          "var(--color-400)",
-          "var(--color-500)",
-          "var(--color-600)",
-          "var(--color-700)",
-          "var(--color-800)",
-          "var(--color-900)",
-          "var(--color-1000)",
-        ][index],
-      };
-    });
-
-    document.documentElement.style.setProperty(
-      "--color-100",
-      hexPalette[0].hex
-    );
-    document.documentElement.style.setProperty(
-      "--color-200",
-      hexPalette[1].hex
-    );
-    document.documentElement.style.setProperty(
-      "--color-300",
-      hexPalette[2].hex
-    );
-    document.documentElement.style.setProperty(
-      "--color-400",
-      hexPalette[3].hex
-    );
-    document.documentElement.style.setProperty(
-      "--color-500",
-      hexPalette[4].hex
-    );
-    document.documentElement.style.setProperty(
-      "--color-600",
-      hexPalette[5].hex
-    );
-    document.documentElement.style.setProperty(
-      "--color-700",
-      hexPalette[6].hex
-    );
-    document.documentElement.style.setProperty(
-      "--color-800",
-      hexPalette[7].hex
-    );
-    document.documentElement.style.setProperty(
-      "--color-900",
-      hexPalette[8].hex
-    );
-    document.documentElement.style.setProperty(
-      "--color-1000",
-      hexPalette[9].hex
-    );
-
+    // Update React state with the selected color, hex value, palette, and code string
     setColor(value);
-
     setHex(hex);
-
     setPalette(hexPalette);
-
-    setCode(`--color-100: ${hexPalette[0].hex};
---color-200: ${hexPalette[0].hex};
---color-300: ${hexPalette[1].hex};
---color-400: ${hexPalette[2].hex};
---color-500: ${hexPalette[3].hex};
---color-600: ${hexPalette[4].hex};
---color-700: ${hexPalette[5].hex};
---color-800: ${hexPalette[6].hex};
---color-900: ${hexPalette[7].hex};
---color-1000: ${hexPalette[8].hex};`);
+    setCode({ hex: hexCss, oklch: oklchCss });
   }
 
-  const handleOptions = (option: string) => {
-    setSelectedOption(option);
-    setIsOpen(false);
-  };
+  // Function to generate an array of hex colors for the palette
+  function generateHexPalette(convertedColor: tinycolor.Instance) {
+    const hexPalette = [];
 
-  function handleToggle(
-    e: React.MouseEvent<HTMLDivElement | HTMLButtonElement, MouseEvent>
-  ) {
-    if (e.currentTarget === e.target) {
-      setToggleAlert(false);
-      setIsOpen(false);
+    // Get HSL values of the color
+    const hsl = convertedColor.toHsl();
+    const hue = hsl.h;
+    const saturation = hsl.s;
+
+    // Calculate the step size for generating 10 colors
+    const step = 80 / NUM_COLORS;
+
+    // Generate colors with varying lightness
+    for (let i = 0; i < NUM_COLORS; i++) {
+      const lightness = MAX_LIGHTNESS - i * step;
+      const color = tinycolor(
+        `hsl(${hue}, ${saturation}, ${lightness}%)`
+      ).toHexString();
+      hexPalette.push({ hex: color, tone: `var(--color-${100 + i * 100})` });
     }
+
+    return hexPalette;
+  }
+
+  // generate CSS variables based on the generated palette
+  function generateHexCss(hexPalette: Palette[]) {
+    hexPalette.forEach((color, index) => {
+      const propertyName = `--color-${100 + index * 100}`;
+      document.documentElement.style.setProperty(propertyName, color.hex);
+    });
   }
 
   return (
@@ -191,57 +134,7 @@ export default function ColorConverter() {
           </button>
         </form>
       </div>
-      {toggleAlert && (
-        <div
-          onClick={(e) => handleToggle(e)}
-          className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
-        >
-          <div className="flex flex-col items-end gap-2 bg-[--background] px-6 pt-2 pb-6 w-full max-w-screen-md rounded-lg shadow-lg">
-            <button
-              onClick={(e) => handleToggle(e)}
-              className="px-2 py-1 text-sm rounded-lg border border-[--accents-2] text-[--gray-900] hover:bg-[--gray-200]"
-            >
-              Esc
-            </button>
-            <div className="flex flex-col w-full h-full rounded-lg border border-[--accents-2]">
-              <div className="flex justify-between items-center px-4 h-12 border-b border-[--accents-2] text-sm">
-                <span>app/globals.css</span>
-                <div className="flex gap-2">
-                  <div className="relative">
-                    <button
-                      className="flex items-center gap-2 px-4 h-full text-[--gray-900] hover:bg-[--gray-200] rounded-lg"
-                      onClick={() => setIsOpen(!isOpen)}
-                    >
-                      {selectedOption}
-                      <FaAngleDown />
-                    </button>
-                    {isOpen && (
-                      <ul className="absolute -right-2 px-2 py-2 rounded-lg bg-[--background] shadow-lg">
-                        {options.map((option) => (
-                          <li
-                            key={option}
-                            onClick={() => handleOptions(option)}
-                            className="flex items-center gap-4 px-4 py-1 text-[--gray-900] hover:bg-[--gray-200] rounded cursor-pointer"
-                          >
-                            {selectedOption === option && <FaCheck size={12} />}
-                            {option}
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                  </div>
-
-                  <CopyButton text={code} />
-                </div>
-              </div>
-
-              <pre className="p-4 overflow-x-auto bg-[--background]">
-                <code className="flex max-w-lg text-sm">{code}</code>
-              </pre>
-            </div>
-          </div>
-        </div>
-      )}
+      {toggleAlert && <Alert code={code} setToggleAlert={setToggleAlert} />}
       <MonochromaticPalette palette={palette} />
     </>
   );
