@@ -1,6 +1,6 @@
 import ColorConverter from "@/components/ColorConverter";
 import DesignSystem from "@/components/DesignSystem";
-import { getCookie } from "@/lib/actions/cookie.actions";
+import { getCookie } from "@/lib/actions";
 
 export default async function Home() {
   const component = await getCookie("component");

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import { components, features } from "@/constants";
-import { addCookie } from "@/lib/actions/cookie.actions";
+import { addCookie } from "@/lib/actions";
 import { FaBars } from "react-icons/fa";
 
 type Props = {
